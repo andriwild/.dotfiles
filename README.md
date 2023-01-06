@@ -12,3 +12,6 @@ dotfiles add /path/to/file
 dotfiles commit -m "A short message"
 dotfiles push
 ```
+
+Consider the link to get more infos:
+[https://www.atlassian.com/git/tutorials/dotfiles]()
