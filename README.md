@@ -1,10 +1,29 @@
 # Dotfiles Repo
 
 ## Setup a bare repository
-1. git init --bare $HOME/.dotfiles
-		or git clone --bare git@git...
-2. alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-3. dotfiles config --local status.showUntrackedFiles no
+```bash
+# create a repo
+git init --bare $HOME/.dotfiles
+# or 
+git clone --bare git@git...
+
+# add this alias to your .zshrc or what you use instead
+alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+dotfiles config --local status.showUntrackedFiles no
+```
+
+## Migrate the data to a new maschine
+```bash
+alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+# prevent from trouble
+echo ".dotfiles" >> .gitignore
+
+# backup your current files, which will be overwritten from the repo or use the Atlassian script
+
+dotfiles checkout
+```
 
 ## Basic usage example:
 ```bash
