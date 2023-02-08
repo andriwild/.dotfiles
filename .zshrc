@@ -220,6 +220,8 @@ alias idea="/home/andri/Templates/idea" "$@"
 alias fleet="/home/andri/Templates/fleet" "$@"
 alias bootRun="./gradlew bootRun"
 alias run-mongo="mongod --dbpath ~/SwitchDrive/4-semester/webfr/Applications/mongodb/data/db"
+alias HD="cd /run/media/andri/Ardita/"
+
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 
 alias movierental="cd /home/andri/SwitchDrive/5-Semester/eaf/06/ab6.1/initial/"
