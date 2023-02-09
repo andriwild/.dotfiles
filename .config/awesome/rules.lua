@@ -16,9 +16,6 @@ awful.rules.rules = {
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
       }
     },
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    { rule_any = { class = { "Chromium-browser", "chromium", "Firefox", "Opera" } },
-      properties = { screen = 1, tag = "1" } },
 
     -- Floating clients.
     { rule_any = {
@@ -57,6 +54,18 @@ awful.rules.rules = {
     }, properties = { titlebars_enabled = true }
     },
 
+    -- Set Firefox to always map on the tag named "2" on screen 1.
 
+    { rule = { instance = "chromium" },
+      properties = { tag = beautiful.tagIcons[1] } },
+
+    { rule = { class = "firefox" },
+      properties = { tag = beautiful.tagIcons[1] } },
+
+    { rule = { instance = "nemo" },
+      properties = { tag = beautiful.tagIcons[4] } },
+
+    { rule = { instance = "idea" },
+      properties = { tag = beautiful.tagIcons[2] } },
 }
 -- }}}
