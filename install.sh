@@ -7,22 +7,25 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+pacman -Syyu
+
 read -p "Ist yay bereits installiert? [y/n] " answer
 
 if [ "$answer" == "${answer#[Nn]}" ] ;then
-    pacman install --noconfirm yay
+    pacman -S --noconfirm yay
+    yay -Sua
 fi
 
 pacman -S --noconfirm bluez bluez-utils blueberry \
-		zip unzip git curl tree wget upower xorg-server-xephyr \
-		npm gcc sshfs  \
-		neovim rofi nemo alacritty\
-		alsa-utils pavucontrol flameshot i3lock brightnessctl \
+		zip unzip git curl tree wget htop tldr sshfs \
+		npm gcc \
+		neovim rofi nemo alacritty \
+		xorg-server-xephyr alsa-utils pavucontrol upower brightnessctl i3lock \
 		arc-icon-theme \
-		chromium qutebrowser \
+		chromium qutebrowser firefox \
+		thunderbird owncloud-client flameshot onlyoffice-desktopeditors \
 		
 yay -S awmtt
-# xserver-xephyr 
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
