@@ -20,6 +20,9 @@ alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 # prevent from trouble
 echo ".dotfiles" >> .gitignore
 
+# clone the repo
+git clone --bare git@github.com:AndriWild/.dotfiles.git $HOME/.dotfiles
+
 # backup your current files, which will be overwritten from the repo or use the Atlassian script
 
 dotfiles checkout
