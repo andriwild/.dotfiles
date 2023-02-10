@@ -6,7 +6,6 @@ require("awful.hotkeys_popup.keys") -- Enable hotkeys help widget for VIM and ot
 require("awful.autofocus")
 
 local gears         = require("gears")
-local awful         = require("awful")
 local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 local configPath    = gears.filesystem.get_configuration_dir()
@@ -36,13 +35,13 @@ do
 end
 -- }}}
 
+-- modkey = "Mod4"
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(configPath .. "themes/default/theme.lua")
 beautiful.get().wallpaper = "/home/andri/.config/awesome/themes/wallpaper/wood-wallpaper.jpg"
 
-terminal    = "alacritty" -- default terminal
-modkey      = "Mod4"
 -- }}}
 
 dofile(configPath .. "logger.lua")

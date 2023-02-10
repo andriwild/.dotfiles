@@ -1,7 +1,10 @@
-local gears = require("gears")
-local awful = require("awful")
+local gears         = require("gears")
+local awful         = require("awful")
 local beautiful     = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local constants     = require("constants")
+
+local modkey = constants.modkey
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
@@ -75,15 +78,15 @@ globalkeys = gears.table.join(
                 function ()
                     awful.spawn.with_shell( "bash ~/.config/rofi-bluetooth/rofi-bluetooth")
                 end,
-                { description = "show wlan menu", group = "launcher" }
+                { description = "show bluetooth menu", group = "launcher" }
         ),
         awful.key(
                 { modkey, "Mod1" },
                 "space",
                 function ()
-                    awful.util.spawn("rofi -show of -modi of:~/.config/rofi/open_folder.sh")
+                    awful.util.spawn("rofi -show fhnw -modi fhnw:~/.config/rofi/open_folder.sh")
                 end,
-                { description = "debug", group = "debug" }
+                { description = "show fhnw folders", group = "launcher" }
         ),
 
 -- Layout manipulation
@@ -142,7 +145,7 @@ globalkeys = gears.table.join(
                 { modkey },
                 "Return",
                 function ()
-                    awful.spawn(terminal, {
+                    awful.spawn(constants.terminal, {
                         tag = beautiful.tagIcons[3]
                     })
                 end,

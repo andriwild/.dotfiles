@@ -1,5 +1,8 @@
 local gears = require("gears")
 local awful = require("awful")
+local constants     = require("constants")
+
+local modkey = constants.modkey
 
 clientkeys = gears.table.join(
         awful.key(
@@ -55,7 +58,7 @@ clientkeys = gears.table.join(
                 function (c)
                     -- The client currently has the input focus, so it cannot be
                     -- minimized, since minimized clients can't have the focus.
-                    c.minimized = true
+                    -- c.minimized = true
                 end ,
                 { description = "minimize", group = "client" }
         ),

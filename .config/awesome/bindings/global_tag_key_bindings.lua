@@ -1,5 +1,8 @@
-local gears = require("gears")
-local awful = require("awful")
+local gears     = require("gears")
+local awful     = require("awful")
+local constants = require("constants")
+
+modkey = constants.modkey
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.

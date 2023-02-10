@@ -1,9 +1,10 @@
-local awful = require("awful")
-local menubar = require("menubar")
+local awful     = require("awful")
+local menubar   = require("menubar")
 local beautiful = require("beautiful")
+local constants = require("constants")
 
+local terminal = constants.terminal
 
-terminal = "lxterminal"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -18,7 +19,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+                                    { "open terminal", terminal  }
 }
 })
 

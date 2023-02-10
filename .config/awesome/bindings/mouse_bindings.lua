@@ -1,5 +1,8 @@
 local awful = require("awful")
 local gears = require("gears")
+local constants     = require("constants")
+
+local modkey = constants.modkey
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(

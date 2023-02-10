@@ -103,7 +103,8 @@ awful.screen.connect_for_each_screen(function(s)
             --wibox.widget.systray(),
             spacing = 5,
             volume_widget {
-                widget_type = 'arc'
+                widget_type = 'arc',
+                thickness = 1,
             },
             battery_widget{},
             brightness_widget {
