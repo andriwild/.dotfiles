@@ -79,11 +79,19 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = 10,
             font = "JetBrains Mono 16"
         }
-        --layout   = {
-        --    spacing = 12,
-        --    layout = wibox.layout.fixed.horizontal
-        --}
     }
+
+    local systrayContainer = wibox.widget {
+			{
+					{
+						widget = wibox.widget.systray()
+				    },
+					layout = wibox.layout.fixed.horizontal
+			},
+			widget = wibox.container.margin,
+			margins = 5
+	}
+
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
@@ -100,7 +108,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            --wibox.widget.systray(),
+			systrayContainer,
             spacing = 5,
             volume_widget {
                 widget_type = 'arc',
