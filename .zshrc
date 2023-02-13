@@ -115,7 +115,6 @@ alias vi="nvim"
 alias gitcount="git rev-list --all --count"
 alias remindme="echo 'notify-send -u critical \"Make a commit!\"' | at now + 15 minutes"
 
-alias idea="/home/andri/Templates/idea" "$@"
 alias fleet="/home/andri/Templates/fleet" "$@"
 alias bootRun="./gradlew bootRun"
 alias run-mongo="mongod --dbpath ~/SwitchDrive/4-semester/webfr/Applications/mongodb/data/db"
