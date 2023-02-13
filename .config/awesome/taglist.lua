@@ -81,6 +81,8 @@ awful.screen.connect_for_each_screen(function(s)
         }
     }
 
+	beautiful.systray_icon_spacing = 10
+
     local systrayContainer = wibox.widget {
 			{
 					{
@@ -89,7 +91,8 @@ awful.screen.connect_for_each_screen(function(s)
 					layout = wibox.layout.fixed.horizontal
 			},
 			widget = wibox.container.margin,
-			margins = 5
+			margins = 6,
+			right = 20
 	}
 
 
