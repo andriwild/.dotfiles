@@ -29,9 +29,9 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(4)
-theme.border_width  = dpi(3)
+theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
-theme.border_focus  = "#767676"
+theme.border_focus  = theme.bg_urgent
 theme.border_marked = "#cbcbcb"
 
 -- There are other variable sets
@@ -52,10 +52,10 @@ theme.border_marked = "#cbcbcb"
 theme.tagIcons = { "󰖟", "", "", "", "󰻞",  }
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
+    taglist_square_size, theme.bg_urgent
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
+    taglist_square_size, theme.bg_urgent
 )
 
 -- Variables set for theming notifications:
