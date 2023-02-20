@@ -254,8 +254,19 @@ globalkeys = gears.table.join(
         awful.key(
                 { modkey },
                 "p",
-		function() xrandr.xrandr() end,
-                { description = "lua execute prompt", group = "awesome" }),
+				function()
+						xrandr.xrandr()
+				end,
+                { description = "lua execute prompt", group = "awesome" }
+				),
+        awful.key(
+                { "Mod1" },
+                "p",
+				function()
+						awful.util.spawn("flameshot gui")
+				end,
+                { description = "Screenshot", group = "launcher" }
+				),
 -- Menubar
         awful.key(
                 { modkey },
