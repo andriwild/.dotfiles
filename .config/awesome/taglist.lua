@@ -12,9 +12,9 @@ local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightne
 
 -- {{{ Wibar
 -- Create a textclock widget
-textClock = wibox.widget.textclock()
+local textClock = wibox.widget.textclock()
 textClock.format = "%H:%M"
-textClockWidget = wibox.container.margin(textClock, 5, 10, 0, 0)
+local textClockWidget = wibox.container.margin(textClock, 5, 10, 0, 0)
 
 -- Keyboard map indicator and switcher
 -- mykeyboardlayout = awful.widget.keyboardlayout()
@@ -116,14 +116,15 @@ awful.screen.connect_for_each_screen(function(s)
             volume_widget {
                 widget_type = 'arc',
                 thickness = 1,
+				device = 'default',
             },
             battery_widget{},
-            brightness_widget {
-                type = 'arc',
-                program = 'brightnessctl',
-                step = 2,
-                base = 80,
-            },
+            --brightness_widget {
+            --    type = 'arc',
+            --    program = 'brightnessctl',
+            --    step = 2,
+            --    base = 80,
+            --},
             textClockWidget,
             --s.mylayoutbox,
         },

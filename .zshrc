@@ -103,6 +103,11 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+source /usr/share/nvm/nvm.sh
+source /usr/share/nvm/bash_completion
+source /usr/share/nvm/install-nvm-exec
+
 # Example aliases
 alias zshconfig="code ~/.zshrc"
 alias ohmyzsh="code ~/.oh-my-zsh"
@@ -120,6 +125,10 @@ alias bootRun="./gradlew bootRun"
 alias run-mongo="mongod --dbpath ~/SwitchDrive/4-semester/webfr/Applications/mongodb/data/db"
 alias HD="cd /run/media/andri/Ardita/"
 
+alias fprod="cd /home/andri/fhnw/6-Semester/fprod/"
+alias apm="cd /home/andri/fhnw/6-Semester/apm/"
+alias woweb="cd /home/andri/fhnw/6-Semester/woweb/"
+
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 
 alias movierental="cd /home/andri/SwitchDrive/5-Semester/eaf/06/ab6.1/initial/"
@@ -136,3 +145,4 @@ complete -o nospace -C /usr/bin/terraform terraform
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
+source /usr/share/nvm/init-nvm.sh
