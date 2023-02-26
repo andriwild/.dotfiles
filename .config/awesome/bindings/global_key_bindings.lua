@@ -37,7 +37,7 @@ globalkeys = gears.table.join(
                 { "Control", "Mod1" },
                 "Delete",
                 function()
-                    awful.spawn.with_shell("i3lock -c 000000 -f")
+                    awful.spawn.with_shell("i3lock -c 000000 -f && systemctl suspend")
                 end,
                 { description = "suspend", group = "power" }
         ),
