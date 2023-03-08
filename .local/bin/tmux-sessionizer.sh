@@ -6,7 +6,13 @@ if [[ $# -eq 1 ]]; then
 else
 
 directories=(
-  $(find ~/fhnw/6-Semester/ -mindepth 1 -maxdepth 3 -type d)
+  $(find ~/fhnw/6-Semester/ -mindepth 2 -maxdepth 2 -type d)
+  $(find ~/fhnw/6-Semester/apm/ -mindepth 2 -maxdepth 2 -type d)
+  $(find ~/fhnw -mindepth 1 -maxdepth 2 -type d)
+  $(find ~/repos/ -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/.config/ -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/.local/bin/ -mindepth 1 -maxdepth 2 -type d)
+  $(find ~/repos/playground/ -mindepth 1 -maxdepth 2 -type d)
 ) 
 selected=$(echo $directories | tr " " "\n" | fzf)
 

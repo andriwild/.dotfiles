@@ -95,6 +95,7 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
+bindkey -s ^f "tmux-sessionizer.sh\n"
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -103,10 +104,6 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-source /usr/share/nvm/nvm.sh
-source /usr/share/nvm/bash_completion
-source /usr/share/nvm/install-nvm-exec
 
 # Example aliases
 alias zshconfig="code ~/.zshrc"

@@ -17,6 +17,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- paste without loosing paste-content
 vim.keymap.set("x", "<leader>y", "\"_dP")
 
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+
 -- TODO: system clipbord copy
 vim.keymap.set("n", "<leader>y", "\"+y")
 vim.keymap.set("v", "<leader>y", "\"+y")
