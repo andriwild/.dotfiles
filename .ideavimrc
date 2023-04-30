@@ -24,7 +24,6 @@ set nu
 """ Idea specific settings ------------------
 set ideajoin
 set ideastatusicon=gray
-set inalmearefactormode=keep
 
 """Mappings --------------------------------
 map <leader>f <Plug>(easymotion-s)
@@ -33,6 +32,7 @@ map <leader>e <Plug>(easymotion-f)
 map <leader>d <Action>(Debug)
 map <leader>r <Action>(RenameElement)<Esc>l
 map <leader>c <Action>(Stop)
+map <leader>g <Action>(Run)
 map <leader>z <Action>(ToggleDistractionFreeMode)
 
 map <leader>s <Action>(SelectInProjectView)
@@ -43,6 +43,7 @@ map <leader>x <Action>(CloseEditor)
 
 map <leader>b <Action>(ToggleLineBreakpoint)
 map <leader>o <Action>(FileStructurePopup)
+map <leader>t :action ActivateTerminalToolWindow<CR>
 
 map <C-d> <C-d>zz
 map <C-u> <C-u>zz

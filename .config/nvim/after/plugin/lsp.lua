@@ -9,6 +9,10 @@ lsp.ensure_installed({
   --'sumneko_lua',
 })
 
+lsp.configure('hls', {
+		cmd = {"/home/andri/.ghcup/bin/haskell-language-server-9.4.4", "--lsp"}
+		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.10.0.0", "--lsp"}
+})
 -- Fix Undefined global 'vim'
 lsp.configure('sumneko_lua', {
     settings = {

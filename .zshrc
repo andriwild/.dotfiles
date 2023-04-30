@@ -115,7 +115,6 @@ alias vim="nvim"
 alias vi="nvim"
 
 alias gitcount="git rev-list --all --count"
-alias remindme="echo 'notify-send -u critical \"Make a commit!\"' | at now + 15 minutes"
 
 alias fleet="/home/andri/Templates/fleet" "$@"
 alias bootRun="./gradlew bootRun"
@@ -142,4 +141,3 @@ complete -o nospace -C /usr/bin/terraform terraform
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
-source /usr/share/nvm/init-nvm.sh

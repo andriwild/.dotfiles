@@ -119,12 +119,12 @@ awful.screen.connect_for_each_screen(function(s)
 				device = 'default',
             },
             battery_widget{},
-            --brightness_widget {
-            --    type = 'arc',
-            --    program = 'brightnessctl',
-            --    step = 2,
-            --    base = 80,
-            --},
+            brightness_widget {
+                type = 'arc',
+                program = 'brightnessctl',
+                step = 2,
+                base = 80,
+            },
             textClockWidget,
             --s.mylayoutbox,
         },
