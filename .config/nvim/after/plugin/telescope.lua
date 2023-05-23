@@ -1,7 +1,7 @@
 require('telescope').setup({
   defaults = {
     file_ignore_patterns = { 'elm-stuff', 'node_modules', '.git' }
-  }
+  },
 })
 
 local builtin = require('telescope.builtin')

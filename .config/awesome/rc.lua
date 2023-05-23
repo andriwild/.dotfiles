@@ -5,6 +5,7 @@ pcall(require, "luarocks.loader")
 require("awful.hotkeys_popup.keys") -- Enable hotkeys help widget for VIM and other apps
 require("awful.autofocus")
 
+local awful         = require("awful")
 local gears         = require("gears")
 local beautiful     = require("beautiful")
 local naughty       = require("naughty")
@@ -58,3 +59,4 @@ dofile(configPath .. "signal.lua")
 -- Set keys
 root.keys(globalkeys)
 
+awful.spawn.with_shell("/home/andri/init.sh")

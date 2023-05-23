@@ -22,3 +22,5 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 vim.opt.clipboard = "unnamedplus"
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true

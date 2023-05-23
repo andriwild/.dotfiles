@@ -9,28 +9,36 @@ lsp.ensure_installed({
   --'sumneko_lua',
 })
 
-lsp.configure('hls', {
-		cmd = {"/home/andri/.ghcup/bin/haskell-language-server-9.4.4", "--lsp"}
-		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.10.0.0", "--lsp"}
-})
+-- lsp.configure('hls', {
+-- 		cmd = {"/home/andri/.ghcup/bin/haskell-language-server-9.4.4", "--lsp"}
+-- 		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.10.0.0", "--lsp"}
+-- })
 -- Fix Undefined global 'vim'
-lsp.configure('sumneko_lua', {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
+-- lsp.configure('sumneko_lua', {
+--     settings = {
+--         Lua = {
+--             diagnostics = {
+--                 globals = { 'vim' }
+--             }
+--         }
+--     }
+-- })
+lsp.configure('arduino_language_server', {
+    cmd = {
+        "arduino-language-server",
+--        "-cli-config", "/home/austin/.arduino15/arduino-cli.yaml",
+        "-fqbn", "arduino:avr:uno",
+       -- "-cli", "/usr/bin/arduino-cli",
+        -- "-clangd", "/usr/bin/clangd"
     }
 })
-
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
   ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+  ['<Enter>'] = cmp.mapping.confirm({ select = true }),
   ["<C-Space>"] = cmp.mapping.complete(),
 })
 

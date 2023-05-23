@@ -1,4 +1,6 @@
-vim.cmd([[call nvimhs#start('/home/andri/repos/snips-nvim/', 'snips', [])]])
+vim.cmd([[
+        call nvimhs#start('/home/andri/repos/snips-nvim', 'snips', [])
+]])
 
 vim.keymap.set("n", "<F5>",
 function()
@@ -7,3 +9,5 @@ function()
 end
 )
 
+
+dofile('/home/andri/repos/snips-nvim/lua/telescope-integration.lua')

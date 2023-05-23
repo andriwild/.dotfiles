@@ -61,7 +61,7 @@ awful.rules.rules = {
       properties = { tag = beautiful.tagIcons[1] } },
 
     { rule = { class = "firefox" },
-      properties = { tag = beautiful.tagIcons[1] } },
+      properties = { tag = beautiful.tagIcons[1], floating = false, maximized = false } },
 
     { rule = { instance = "nemo" },
       properties = { tag = beautiful.tagIcons[4] } },
