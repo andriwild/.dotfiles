@@ -1,6 +1,6 @@
-local gears = require("gears")
-local awful = require("awful")
-local constants     = require("constants")
+local gears     = require("gears")
+local awful     = require("awful")
+local constants = require("constants")
 
 local modkey = constants.modkey
 
