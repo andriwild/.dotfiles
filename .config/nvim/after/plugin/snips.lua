@@ -10,4 +10,4 @@ end
 )
 
 
-dofile('/home/andri/repos/snips-nvim/lua/telescope-integration.lua')
+--dofile('/home/andri/repos/snips-nvim/lua/telescope-integration.lua')

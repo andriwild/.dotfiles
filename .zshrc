@@ -84,6 +84,8 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
+export EDITOR="/usr/bin/nvim"
+export VISUAL="/usr/bin/nvim"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -125,15 +127,20 @@ alias fprod="cd /home/andri/fhnw/6-Semester/fprod/"
 alias apm="cd /home/andri/fhnw/6-Semester/apm/"
 alias woweb="cd /home/andri/fhnw/6-Semester/woweb/"
 
+# Arduino
+alias up="arduino-cli compile && arduino-cli upload"
+alias serial="stty 9600 -F /dev/ttyUSB0 raw -echo && cat /dev/ttyUSB0"
+alias acli="arduino-cli"
+
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 
-alias movierental="cd /home/andri/SwitchDrive/5-Semester/eaf/06/ab6.1/initial/"
 alias dc="docker compose"
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform

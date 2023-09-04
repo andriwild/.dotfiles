@@ -9,10 +9,10 @@ lsp.ensure_installed({
   --'sumneko_lua',
 })
 
--- lsp.configure('hls', {
--- 		cmd = {"/home/andri/.ghcup/bin/haskell-language-server-9.4.4", "--lsp"}
--- 		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.10.0.0", "--lsp"}
--- })
+lsp.configure('hls', {
+		cmd = {"/home/andri/.ghcup/bin/haskell-language-server-9.4.4", "--lsp"}
+		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.10.0.0", "--lsp"}
+})
 -- Fix Undefined global 'vim'
 -- lsp.configure('sumneko_lua', {
 --     settings = {
@@ -27,7 +27,7 @@ lsp.configure('arduino_language_server', {
     cmd = {
         "arduino-language-server",
 --        "-cli-config", "/home/austin/.arduino15/arduino-cli.yaml",
-        "-fqbn", "arduino:avr:uno",
+--        "-fqbn", "esp32:esp32:featheresp32",
        -- "-cli", "/usr/bin/arduino-cli",
         -- "-clangd", "/usr/bin/clangd"
     }

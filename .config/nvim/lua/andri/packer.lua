@@ -5,18 +5,18 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
 	-- Packer can manage itself
-	
 	-- haskell plugins
     use 'neovimhaskell/nvim-hs.vim'
 
 	use 'wbthomason/packer.nvim'
 
+    use 'lervag/vimtex'
 
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.0',
-		-- or                            , branch = '0.1.x',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
+    use {
+      'nvim-telescope/telescope.nvim', tag = '0.1.0',
+      -- or                            , branch = '0.1.x',
+      requires = { {'nvim-lua/plenary.nvim'} }
+    }
 	use{"catppuccin/nvim", as ="catppuccin"}
 --	use({
 --		'rose-pine/neovim',
@@ -51,12 +51,16 @@ return require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'},
 		}
 }
-use {
-		'mrcjkb/haskell-tools.nvim',
-		requires = {
-				'nvim-lua/plenary.nvim',
-				'nvim-telescope/telescope.nvim', -- optional
-		},
-		branch = '1.x.x', -- recommended
-}
+--use {
+--		'mrcjkb/haskell-tools.nvim',
+--		requires = {
+--				'nvim-lua/plenary.nvim',
+--				'nvim-telescope/telescope.nvim', -- optional
+--		},
+--		branch = '1.x.x', -- recommended
+--}  -- navigation utilities
+  use('preservim/nerdtree')
+  use('ryanoasis/vim-devicons')
+  use('christoomey/vim-tmux-navigator')
+  use {'stevearc/dressing.nvim' }
 end)

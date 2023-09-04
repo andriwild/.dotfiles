@@ -1,7 +1,7 @@
-local gears         = require("gears")
-local awful         = require("awful")
-local wibox         = require("wibox")
-local beautiful     = require("beautiful")
+local gears     = require("gears")
+local awful     = require("awful")
+local wibox     = require("wibox")
+local beautiful = require("beautiful")
 
 -- ### Pavlov Widgets ###
 -- ### https://pavelmakhov.com/awesome-wm-widgets/
@@ -76,12 +76,12 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
         style = {
-            spacing = 10,
-            font = "JetBrains Mono 16"
-        }
+            spacing = 2,
+            font = "JetBrains Mono 10"
+        },
     }
 
-	beautiful.systray_icon_spacing = 10
+	beautiful.systray_icon_spacing = 8
 
     local systrayContainer = wibox.widget {
 			{
@@ -92,7 +92,7 @@ awful.screen.connect_for_each_screen(function(s)
 			},
 			widget = wibox.container.margin,
 			margins = 6,
-			right = 20
+			right = 20,
 	}
 
 

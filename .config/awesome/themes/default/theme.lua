@@ -48,8 +48,8 @@ theme.border_marked = "#cbcbcb"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
---         <
-theme.tagIcons = { "󰖟", "", "", "", "󰻞",  }
+--           s
+theme.tagIcons = { " 󰖟 ", "  ", "  ", "  ", " 󰻞 ",  }
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.bg_urgent

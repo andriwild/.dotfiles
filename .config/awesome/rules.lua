@@ -66,7 +66,10 @@ awful.rules.rules = {
     { rule = { instance = "nemo" },
       properties = { tag = beautiful.tagIcons[4] } },
 
-    { rule = { instance = "idea" },
-      properties = { tag = beautiful.tagIcons[2] } },
+--     { rule = { instance = "idea" },
+--       properties = { tag = beautiful.tagIcons[2] } },
+
+    { rule = { instance = "alacritty" },
+      properties = { opacity = 0.9} },
 }
 -- }}}

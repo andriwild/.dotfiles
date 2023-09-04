@@ -9,7 +9,7 @@ sudo yay -Sua
 
 sudo pacman -S --noconfirm bluez bluez-utils blueberry cifs-utils \
 		zip unzip git curl tree wget htop tldr sshfs gcc g++ usbutils \
-		make cmake gmp ncurses realpath xz \
+		make cmake gmp ncurses realpath xz ripgrep\
 		npm fzf \
 		neovim rofi nemo alacritty code tmux \
 		xorg-server-xephyr alsa-utils pavucontrol upower brightnessctl i3lock xclip \
