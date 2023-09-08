@@ -18,8 +18,14 @@ myawesomemenu = {
     { "quit", function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal  }
+monitor_menu = {
+  { "Home", function() awful.spawn.with_shell(".screenlayout/home.sh") end},
+  { "Work", function() awful.spawn.with_shell(".screenlayout/work.sh") end}
+}
+
+mymainmenu = awful.menu({ items = { 
+  { "Awesome", myawesomemenu, beautiful.awesome_icon },
+  { "Monitor", monitor_menu}
 }
 })
 
