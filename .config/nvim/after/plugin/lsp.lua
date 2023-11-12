@@ -10,19 +10,22 @@ lsp.ensure_installed({
 })
 
 lsp.configure('hls', {
-		cmd = {"/home/andri/.ghcup/bin/haskell-language-server-9.4.4", "--lsp"}
-		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.10.0.0", "--lsp"}
+		 --cmd = {"/home/andri/.ghcup/bin/haskell-language-server-2.2.0.0", "--lsp"}
+		--cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.9.1.0", "--lsp"}
+		cmd = {"/home/andri/.ghcup/hls/2.2.0.0/lib/haskell-language-server-2.2.0.0/bin/haskell-language-server-wrapper", "--lsp"}
 })
--- Fix Undefined global 'vim'
--- lsp.configure('sumneko_lua', {
---     settings = {
---         Lua = {
---             diagnostics = {
---                 globals = { 'vim' }
---             }
---         }
---     }
--- })
+
+--Fix Undefined global 'vim'
+lsp.configure('lua-language-server', {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+})
+
 lsp.configure('arduino_language_server', {
     cmd = {
         "arduino-language-server",

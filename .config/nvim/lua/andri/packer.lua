@@ -18,6 +18,8 @@ return require('packer').startup(function(use)
       requires = { {'nvim-lua/plenary.nvim'} }
     }
 	use{"catppuccin/nvim", as ="catppuccin"}
+    use{"rose-pine/neovim",as = "rose-pine"}
+
 --	use({
 --		'rose-pine/neovim',
 --		as = 'rose-pine',
@@ -51,16 +53,9 @@ return require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'},
 		}
 }
---use {
---		'mrcjkb/haskell-tools.nvim',
---		requires = {
---				'nvim-lua/plenary.nvim',
---				'nvim-telescope/telescope.nvim', -- optional
---		},
---		branch = '1.x.x', -- recommended
---}  -- navigation utilities
   use('preservim/nerdtree')
   use('ryanoasis/vim-devicons')
   use('christoomey/vim-tmux-navigator')
   use {'stevearc/dressing.nvim' }
+  use('christoomey/vim-tmux-navigator')
 end)
