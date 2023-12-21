@@ -12,6 +12,10 @@ local TMUX_DARK  = "dark"
 local TMUX_CONFIG      = "~/.config/tmux/tmux.conf"
 local ALACRITTY_CONFIG = "~/.config/alacritty/alacritty.yml"
 
+require("catppuccin").setup({
+  transparent_background = true
+})
+
 function ColorMyPencils(color)
 	color = color or NVIM_DARK
 	vim.cmd.colorscheme(color)
@@ -53,6 +57,5 @@ ToggleTheme = function ()
     Dark()
   end
 end
-
 
 Dark()
