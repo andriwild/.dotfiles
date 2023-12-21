@@ -18,6 +18,12 @@ return require('packer').startup(function(use)
       requires = { {'nvim-lua/plenary.nvim'} }
     }
 	use{"catppuccin/nvim", as ="catppuccin"}
+
+    require("catppuccin").setup({
+      transparent_background = true
+    })
+
+
     use{"rose-pine/neovim",as = "rose-pine"}
 
 --	use({
@@ -56,6 +62,7 @@ return require('packer').startup(function(use)
   use('preservim/nerdtree')
   use('ryanoasis/vim-devicons')
   use('christoomey/vim-tmux-navigator')
-  use {'stevearc/dressing.nvim' }
+  use('stevearc/dressing.nvim')
   use('christoomey/vim-tmux-navigator')
+  use('girishji/pythondoc.vim')
 end)
