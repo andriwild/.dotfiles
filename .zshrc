@@ -8,7 +8,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="arrow"
+#ZSH_THEME="arrow"
+ZSH_THEME="awesomepanda"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -107,34 +108,64 @@ bindkey -s ^f "tmux-sessionizer.sh\n"
 # For a full list of active aliases, run `alias`.
 #
 
-# Example aliases
-alias zshconfig="code ~/.zshrc"
-alias ohmyzsh="code ~/.oh-my-zsh"
+# General
+alias zshconfig="nvim ~/.zshrc && source /home/andri/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias cheat="tldr"
 alias pac="pacman"
 alias v="nvim"
 alias vim="nvim"
 alias vi="nvim"
+alias hg="history | grep $1"
+alias xclip="xclip -selection clipboard"
+alias tree="tree -L 2"
 
+# Git
 alias gitcount="git rev-list --all --count"
 
-alias fleet="/home/andri/Templates/fleet" "$@"
 alias bootRun="./gradlew bootRun"
 alias run-mongo="mongod --dbpath ~/SwitchDrive/4-semester/webfr/Applications/mongodb/data/db"
 alias HD="cd /run/media/andri/Ardita/"
 
-alias fprod="cd /home/andri/fhnw/6-Semester/fprod/"
-alias apm="cd /home/andri/fhnw/6-Semester/apm/"
-alias woweb="cd /home/andri/fhnw/6-Semester/woweb/"
+alias cabaltest="cabal test --test-show-detail=direct"
+
+#Zig
+alias zrun="zig build run"
+alias ztest="zig build test"
 
 # Arduino
 alias up="arduino-cli compile && arduino-cli upload"
 alias serial="stty 9600 -F /dev/ttyUSB0 raw -echo && cat /dev/ttyUSB0"
 alias acli="arduino-cli"
 
+# Python
+alias newenv="python -m venv .venv && source .venv/bin/acitvate"
+
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 
+# Docker
 alias dc="docker compose"
+
+# Joplin
+# alias todo="joplin use $1 && joplin mktodo $2"
+function todo() {
+  joplin use "$1"
+  joplin mktodo "$2"
+}
+
+#IMVS
+#BruggEye
+alias bruggeye-server="ssh -i /home/andri/.ssh/bruggEye_switch_engines.pem  ubuntu@86.119.41.12"
+alias bruggeye-yaler="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-e4-5f-01-57-1c-1d-ssh"
+alias bruggeye-yaler-backup="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 dc-a6-32-03-31-80-ssh"
+alias bruggeye-remove-ssh-keys="ssh-keygen -R '[localhost]:10022'"
+alias bruggeye-gateway="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
+alias bruggeye-gateway-backup="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw-02.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
+
+# SoftEng
+export PICO_TOOLCHAIN_PATH=/home/andri/workspace/raspi/xpack-arm-none-eabi-gcc-12.3.1-1.2/bin/
+export PICO_SDK_PATH=/home/andri/workspace/raspi/pico/pico-sdk/
+export PATH=/home/andri/workspace/raspi/xpack-arm-none-eabi-gcc-12.3.1-1.2/bin/:$PATH
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
@@ -149,5 +180,7 @@ complete -o nospace -C /usr/bin/terraform terraform
 
 #[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
 source /usr/share/nvm/init-nvm.sh
+
+#[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
 
 [ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env

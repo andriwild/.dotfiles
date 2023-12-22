@@ -15,15 +15,42 @@ lsp.configure('hls', {
 		cmd = {"/home/andri/.ghcup/hls/2.2.0.0/lib/haskell-language-server-2.2.0.0/bin/haskell-language-server-wrapper", "--lsp"}
 })
 
+vim.g.zig_fmt_autosave = 0;
+
 --Fix Undefined global 'vim'
-lsp.configure('lua-language-server', {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
+--lsp.configure('lua-language-server', {
+--    settings = {
+--        Lua = {
+--            diagnostics = {
+--                globals = { 'vim' }
+--            }
+--        }
+--    }
+--})
+-- require'lspconfig'.pylsp.setup{
+--   settings = {
+--     pylsp = {
+--       plugins = {
+--         pycodestyle = {
+--           ignore = {'W391'},
+--           maxLineLength = 100
+--         }
+--       }
+--     }
+--   }
+-- }
+
+lsp.configure('pylsp', {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = {'W391', 'E402'},
+          maxLineLength = 200
         }
+      }
     }
+  }
 })
 
 lsp.configure('arduino_language_server', {
