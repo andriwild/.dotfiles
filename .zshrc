@@ -3,6 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -173,14 +174,10 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform
+# autoload -U +X bashcompinit && bashcompinit
+# complete -o nospace -C /usr/bin/terraform terraform
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
-source /usr/share/nvm/init-nvm.sh
-
-#[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
-
-[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
+# source /usr/share/nvm/init-nvm.sh

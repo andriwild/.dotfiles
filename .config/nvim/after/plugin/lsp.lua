@@ -2,12 +2,12 @@ local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
 
-lsp.ensure_installed({
-  'tsserver',
-  'eslint',
-  'rust_analyzer',
-  --'sumneko_lua',
-})
+--lsp.ensure_installed({
+--  'tsserver',
+--  'eslint',
+--  'rust_analyzer',
+--  --'sumneko_lua',
+--})
 
 lsp.configure('hls', {
 		 --cmd = {"/home/andri/.ghcup/bin/haskell-language-server-2.2.0.0", "--lsp"}
@@ -18,6 +18,7 @@ lsp.configure('hls', {
 vim.g.zig_fmt_autosave = 0;
 
 --Fix Undefined global 'vim'
+<<<<<<< Updated upstream
 --lsp.configure('lua-language-server', {
 --    settings = {
 --        Lua = {
@@ -63,23 +64,39 @@ lsp.configure('arduino_language_server', {
     }
 })
 
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<Enter>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
-})
+  local cmp = require('cmp')
+  local cmp_action = require('lsp-zero').cmp_action()
+
+  cmp.setup({
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+      ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+      ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+      ["<C-Space>"] = cmp.mapping.complete(),
+    })
+  })
+
+--local cmp = require('cmp')
+--local cmp_select = {behavior = cmp.SelectBehavior.Select}
+--local cmp_mappings = lsp.defaults.cmp_mappings({
+--  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+--  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+--  ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+--  ["<C-Space>"] = cmp.mapping.complete(),
+--})
 
 -- disable completion with tab
 -- this helps with copilot setup
 -- cmp_mappings['<Tab>'] = nil
 -- cmp_mappings['<S-Tab>'] = nil
 
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
+-- lsp.setup_nvim_cmp({
+--   mapping = cmp_mappings
+-- })
 
 lsp.set_preferences({
 --	sign_icons = { }
