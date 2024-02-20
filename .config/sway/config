@@ -1,6 +1,7 @@
+include /etc/sway/config.d/*
 #========================#
-# Appearance and Theming #
-#========================#
+# Appearance and Theming # 
+#========================# 
 # Declare Colors:
 set $background #332b2b
 set $color_urgent #fb49ff
@@ -29,6 +30,16 @@ default_border pixel 1
 # Set the Wallpaper:
 output * bg $HOME/.config/sway/wallpaper.jpg fill
 
+# https://github.com/flameshot-org/flameshot/blob/master/docs/Sway%20and%20wlroots%20support.md
+# exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# exec hash dbus-update-activation-environment 2>/dev/null && \
+#      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
+
+
+# Screenshot
+bindsym Mod4+p exec grimshot copy area
+bindsym Mod4+Shift+p exec grimshot save area
 
 #====================================#
 # Activate the panel                 #
@@ -70,11 +81,6 @@ bindsym $mod+Escape exec $lock_screen
 #========================================#
 # Keyboard Shortcuts (Window Management) #
 #========================================#
-# Move focus to another window:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
 
 # Move focus to another window ("cult of vim" version):
 bindsym $mod+j focus down
@@ -89,10 +95,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # Move the the window ("cult of vim" version):
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+# bindsym $mod+Shift+h move left
+# bindsym $mod+Shift+j move down
+# bindsym $mod+Shift+k move up
+# bindsym $mod+Shift+l move right
 
 # Hold the modifier key and hold the left/right mouse button
 # to drag or resize a window respectively. This isn't exclusive
@@ -108,10 +114,10 @@ mode "resize" {
     bindsym Right resize grow width 10px
 
     # "cult of vim" version:
-    bindsym h resize shrink width 10px
-    bindsym j resize grow height 10px
-    bindsym k resize shrink height 10px
-    bindsym l resize grow width 10px
+    bindsym h resize shrink width 40px
+    bindsym j resize grow height 40px
+    bindsym k resize shrink height 40px
+    bindsym l resize grow width 40px
 
     # Return to default mode
     bindsym Return mode "default"
@@ -124,15 +130,13 @@ bindsym $mod+r mode "resize"
 # Keyboard Shortcuts (Workspaces) #
 #=================================#
 # Switch to workspace
-set $ws1 "1 - Communication"
-set $ws2 "2 - Browsing"
-set $ws3 "3 - System Administration"
-set $ws4 "4 - Learn Linux TV"
-set $ws5 "5 - Media"
-set $ws6 "6 - Writing"
-set $ws7 "7 - Homelab"
-set $ws8 "8 - Home Assistant"
-set $ws9 "9 - Unwind"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
 
 # Move between workspaces
 bindsym ctrl+1 workspace $ws1
@@ -142,8 +146,6 @@ bindsym ctrl+4 workspace $ws4
 bindsym ctrl+5 workspace $ws5
 bindsym ctrl+6 workspace $ws6
 bindsym ctrl+7 workspace $ws7
-bindsym ctrl+8 workspace $ws8
-bindsym ctrl+9 workspace $ws9
 
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -153,8 +155,6 @@ bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
 
 
 #=============================#
@@ -210,6 +210,11 @@ bindsym XF86AudioMute exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -R
 bindsym XF86MonBrightnessDown exec light -U 10
 bindsym XF86MonBrightnessUp exec light -A 10
 
+# Player
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
 
 #=============================================#
 # Keyboard Shortcuts (launching applications) #
@@ -219,9 +224,6 @@ set $menu wofi --show drun  -i | xargs swaymsg exec --
 
 # Launch your browser:
 bindsym $mod+shift+b exec firefox
-
-# Open a file manager:
-bindsym ctrl+$mod+f exec pcmanfm
 
 # Open a terminal emulator:
 set $term alacritty
@@ -236,6 +238,40 @@ bindsym $mod+space exec $menu
 # Open the application launcher (alternate version):
 bindsym $mod+d exec $menu
 
+#==========#
+# Monitors #
+#==========#
+set $builtin "eDP-1" 
+set $Dell_4k "Dell Inc. DELL P2723QE 4WPQYV3" 
+set $AOC "Unknown 2369M AGKF99A000332" 
+set $HP_Vertical "Unknown HP Z24n G2 6CM9461P54"
+set $HP_Center "Unknown HP Z24n G2 6CM9461NZB"
+
+# Laptop
+output $builtin mode 1920x1200 pos 0 0 scale 1
+workspace $ws1 output $builtin
+
+# Home
+output $Dell_4k mode 3840x2160 pos 1920 0 scale 1.5
+output $AOC mode 1920x1080 pos 4480 0 scale 1 transform 90
+
+workspace $ws2 output $Dell_4k $builtin
+workspace $ws3 output $AOC $builtin
+
+# Work
+output $HP_Center mode 1920x1200 pos 1920 0 scale 1
+output $HP_Vertical mode 1920x1200 pos 3840 0 scale 1 transform 90
+
+workspace $ws2 output $HP_Center $builtin
+workspace $ws3 output $HP_Vertical $builtin
+
+set $left = $builtin
+set $right = $HP_Vertical
+set $center = $HP_Center
+
+bindsym $mod+Control+Shift+left move workspace to output right
+bindsym $mod+Control+Shift+right move workspace to output left
+
 #======#
 # Misc #
 #======#
@@ -243,12 +279,26 @@ include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 
 input "1:1:AT_Translated_Set_2_keyboard" {
-   xkb_layout ch
+   xkb_layout custom_ch
    xkb_options caps:ctrl_modifier
+   xkb_numlock enabled
+}
+
+input "1133:45915:MX_Keys_Keyboard" {
+   xkb_layout custom_ch
+   xkb_options caps:ctrl_modifier
+   xkb_numlock enabled
 }
 
 input type:touchpad {
       dwt enabled
       tap enabled
+}
+
+# work
+input "1130:270:USB_Wireless_Device" {
+   xkb_layout custom_ch
+   xkb_options caps:ctrl_modifier
+   xkb_numlock enabled
 }
 # natural_scroll enabled # insert in input
