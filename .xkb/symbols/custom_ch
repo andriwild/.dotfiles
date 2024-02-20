@@ -1,0 +1,17 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+        include "ch"
+        name[Group1] = "Modified programmer keyboard";
+
+        key <AB02> { [ x, X, bracketleft ] };
+        key <AB03> { [ c, C, bracketright ] };
+
+        key <AC01> { [ a, A, slash] };
+        key <AC03> { [ d, D, parenleft ] };
+        key <AC04> { [ f, F, parenright ] };
+
+        key <AD03> { [ e, E, braceleft ] };
+        key <AD04> { [ r, R, braceright ] };
+        key <AD08> { [ i, I, bar] };
+        key <AD12> { [ slash ] };
+};
