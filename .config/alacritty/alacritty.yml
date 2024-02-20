@@ -5,7 +5,7 @@ import:
 # - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
 # - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
 # - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
-- ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+ - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
 #
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -51,7 +51,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 1
+  opacity: 0.95
   # background_opacity: 0
 
   # Window decorations
@@ -127,7 +127,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    family: JetBrains Mono
+    family: JetBrainsMono Nerd Font
     # family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
@@ -146,7 +146,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    family: JetBrains Mono
+    family: JetBrainsMono Nerd Font
     # family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
@@ -165,7 +165,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    family: JetBrains Mono
+    family: JetBrainsMono Nerd Font
     # family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
@@ -184,7 +184,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    family: JetBrains Mono
+    family: JetBrainsMono Nerd Font
     # family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
     # family: TerminessTTF Nerd Font
@@ -194,7 +194,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
