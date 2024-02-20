@@ -1,21 +1,28 @@
 * {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-family: JetBrainsMono Nerd Font;
     font-size: 12px;
     min-height: 0;
     /*padding-bottom: 1px;*/
     /*padding-top: 2px;*/
 }
 
+window#waybar {
+    opacity: 0.5;
+    background: #000000;
+    transition-duration: .2s;
+    transition-property: background-color;
+}
+
 #battery {
     background: transparent;
     color: #ffffff;
     opacity: 0.7;
-    padding: 2px 6px;
+    padding: 2px 2px;
 }
 
 #battery.charging, #battery.plugged {
     color: #ffffff;
-    padding: 2px 8px;
+    padding: 2px 6px;
 }
 
 #battery.critical:not(.charging) {
@@ -30,16 +37,17 @@
 
 #clock {
     /*background: #1f1f1f;*/
+    font-family: Roboto;
     color: #ffffff;
-    /*margin-right: 4px;*/
-    padding: 6px 10px 2px 2px;
+    margin: 0 4px;
+    padding: 2px 2px;
 }
 
 #network {
     background: transparent;
     color: #ffffff;
     opacity: 0.7;
-    /*padding: 2px 8px;*/
+    padding: 2px 2px;
 }
 
 #network.disconnected {
@@ -48,14 +56,12 @@
 }
 
 #tray {
-    background: #1f1f1f;
     color: #ffffff;
-    margin-left: 18px;
+    margin-right: 10px;
 }
 
 #tray > .passive {
     -gtk-icon-effect: dim;
-    background: #1f1f1f;
     color: #ffffff;
 }
 
@@ -65,12 +71,10 @@
     color: #ffffff;
 }
 
-window#waybar {
-    background: transparent;
-    border-bottom: 1px solid #332b2b;
-    transition-duration: .2s;
-    transition-property: background-color;
+#workspaces {
+    font-family: Roboto;
 }
+
 
 #workspaces button:hover {
     /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -80,17 +84,17 @@ window#waybar {
     color: #ffffff;
 }
 
-/*
 #workspaces button {
     background: transparent;
     color: #ffffff;
-    margin-left: 2px;
-    margin-right: 2px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 2px;
     opacity: 0.7;
 }
 
 #workspaces button.focused {
-    background: #453e3d;
+    border-bottom: 1px solid #ffffff;
     color: #ffffff;
     opacity: 0.8;
 }
@@ -98,21 +102,11 @@ window#waybar {
 #workspaces button.urgent {
     background-color: #eb4d4b;
 }
-*/
-
 
 /* Custom Stuff */
 #custom-audio {
     background: transparent;
     color: #ffffff;
     opacity: 0.7;
-    /*padding: 2px 8px;*/
+    padding: 2px 2px;
 }
-
-#custom-hostname {
-    background: transparent;
-    color: #ffffff;
-    /*padding: 2px 8px;*/
-    opacity: 0.7;
-}
-
