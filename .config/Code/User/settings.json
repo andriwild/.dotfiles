@@ -1,0 +1,53 @@
+{
+    "window.menuBarVisibility": "toggle",
+    "editor.minimap.enabled": false,
+    "zig.initialSetupDone": true,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "zig.path": "/opt/zig/zig",
+    "zig.zls.path": "/home/andri/.config/Code/User/globalStorage/ziglang.vscode-zig/zls_install/zls",
+    "zig.formattingProvider": "off",
+    "zig.zls.enableInlayHints": false,
+    "workbench.colorTheme": "Visual Studio Dark",
+    "agdaMode.connection.agdaPath": "/usr/bin/agda",
+
+    "editor.lineNumbers": "relative",
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+    {
+        "before": ["<leader>", "t"],
+        "commands": ["workbench.action.terminal.toggleTerminal"]
+    },
+    {
+        "before": ["<leader>", "v", "d"],
+        "commands": ["editor.action.showHover"]
+    },
+    {
+        "before": ["<leader>", "enter"],
+        "commands": ["editor.action.quickFix"]
+    },
+    {
+        "before": ["K"],
+        "commands": ["editor.action.showHover"]
+    },
+    {
+        "before": ["<leader>", "s", "f"],
+        "commands": ["workbench.action.quickOpen"]
+    },
+    {
+        "before": ["<leader>", "g", "f"],
+        "commands": ["workbench.action.findInFiles"]
+    },
+    {
+        "before": [ "<leader>", "2"],
+        "commands": [ "editor.action.marker.next"]
+    }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+    {
+        "before": ["<leader>", "y"],
+        "commands": [ "editor.action.clipboardCopyAction" ]
+    }
+]
+}
