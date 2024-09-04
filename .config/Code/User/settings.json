@@ -14,6 +14,7 @@
 
     "editor.lineNumbers": "relative",
     "vim.leader": "<space>",
+    "vim.useSystemClipboard": true,
     "vim.normalModeKeyBindingsNonRecursive": [
     {
         "before": ["<leader>", "t"],
@@ -49,5 +50,17 @@
         "before": ["<leader>", "y"],
         "commands": [ "editor.action.clipboardCopyAction" ]
     }
-]
+],
+"jupyter.widgetScriptSources": [
+    "jsdelivr.com",
+    "unpkg.com"
+],
+"python.defaultInterpreterPath": "/home/andri/fhnw/MSE/MachLe/notebooks/.venv",
+"github.copilot.chat.welcomeMessage": "never",
+"github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+}
 }

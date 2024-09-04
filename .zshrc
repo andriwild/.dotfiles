@@ -4,6 +4,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/opt/zig/"
+export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts/"
+export XDG_CURRENT_DESKTOP=sway
+[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -73,12 +77,13 @@ ZSH_THEME="awesomepanda"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    aliases
+    # aliases
     zsh-syntax-highlighting 
-    zsh-autosuggestions 
+    # zsh-autosuggestions 
     git 
     docker 
     docker-compose
+    #zsh-vi-mode
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -99,6 +104,15 @@ export VISUAL="/usr/bin/nvim"
 #   export EDITOR='mvim'
 # fi
 
+# zsh-vi-mode try to run tmux-sessionizer (dont't work)
+# function run_t() {
+#   tmux-sessionizer.sh
+# }
+# function zvm_after_lazy_keybindings() {
+#   zvm_define_widget run_t
+#   zvm_bindkey vicmd '^f' run_t
+# }
+
 bindkey -s ^f "tmux-sessionizer.sh\n"
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -117,9 +131,10 @@ alias pac="pacman"
 alias v="nvim"
 alias vim="nvim"
 alias vi="nvim"
+alias svi="source .venv/bin/activate && nvim"
 alias hg="history | grep $1"
 alias xclip="xclip -selection clipboard"
-alias tree="tree -L 2"
+alias tree="tree -L 3"
 
 # Git
 alias gitcount="git rev-list --all --count"
@@ -140,7 +155,9 @@ alias serial="stty 9600 -F /dev/ttyUSB0 raw -echo && cat /dev/ttyUSB0"
 alias acli="arduino-cli"
 
 # Python
-alias newenv="python -m venv .venv && source .venv/bin/acitvate"
+alias python="python3"
+alias sou="source ./.venv/bin/activate"
+alias newenv="python3 -m venv .venv && source .venv/bin/activate"
 
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 
@@ -156,22 +173,15 @@ function todo() {
 
 #IMVS
 #BruggEye
-alias bruggeye-server="ssh -i /home/andri/.ssh/bruggEye_switch_engines.pem  ubuntu@86.119.41.12"
-alias bruggeye-yaler="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-e4-5f-01-57-1c-1d-ssh"
-alias bruggeye-yaler-backup="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 dc-a6-32-03-31-80-ssh"
-alias bruggeye-remove-ssh-keys="ssh-keygen -R '[localhost]:10022'"
-alias bruggeye-gateway="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
-alias bruggeye-gateway-backup="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw-02.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
+# alias bruggeye-server="ssh -i /home/andri/.ssh/bruggEye_switch_engines.pem  ubuntu@86.119.41.12"
+# alias bruggeye-yaler="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-e4-5f-01-57-1c-1d-ssh"
+# alias bruggeye-yaler-backup="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 dc-a6-32-03-31-80-ssh"
+# alias bruggeye-remove-ssh-keys="ssh-keygen -R '[localhost]:10022'"
+# alias bruggeye-gateway="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
+# alias bruggeye-gateway-backup="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw-02.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
 
-# SoftEng
-export PICO_TOOLCHAIN_PATH=/home/andri/workspace/raspi/xpack-arm-none-eabi-gcc-12.3.1-1.2/bin/
-export PICO_SDK_PATH=/home/andri/workspace/raspi/pico/pico-sdk/
-export PATH=/home/andri/workspace/raspi/xpack-arm-none-eabi-gcc-12.3.1-1.2/bin/:$PATH
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 
 # autoload -U +X bashcompinit && bashcompinit
@@ -181,3 +191,15 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 #[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
 # source /usr/share/nvm/init-nvm.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)

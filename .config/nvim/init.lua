@@ -1,1 +1,4 @@
-require("andri")
+require("config.lazy")
+require("config.remap")
+require("config.set")
+require("config.util")

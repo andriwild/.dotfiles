@@ -1,20 +1,3 @@
-//====================================================================================================//
-// Waybar Configuration File                                                                          //
-//----------------------------------------------------------------------------------------------------//
-// Purpose: Creates a minimalistic (yet functional) waybar at                                         //
-// the top of the screen.                                                                             //
-// themes and colors, set the wallpaper, and more.                                                    //
-//                                                                                                    //
-// License: Creative Commons Attribution 4.0 International                                            //
-//                                                                                                    //
-// Credit:                                                                                            //
-// Battery section adapted from:                                                                      //
-// https://github.com/Egosummiki/dotfiles/blob/master/waybar/config                                   //
-//                                                                                                    //
-// Pipewire audio adapted from:                                                                       //
-// https://www.reddit.com/r/swaywm/comments/sks343/pwvolume_pipewire_volume_control_and_waybar_module //
-//====================================================================================================//
-
 {
     "layer": "top",
     "position": "top",
@@ -25,13 +8,32 @@
 
     // Choose the order of the modules
     "modules-left": ["sway/workspaces"],
-    "modules-right": [ "tray", "custom/audio","network","battery","clock"],
+
+    "modules-right": [
+      "tray", 
+      "custom/audio",
+      "network",
+      "battery",
+      "clock",
+      "custom/power",
+    ],
+
+    "backlight": {
+      "format": "{percent}% {icon}",
+      "format-icons": ["", ""]
+    },
 
     // Configuration for individual modules
      "sway/workspaces": {
          "disable-scroll": true,
          "all-outputs": true,
          "format": "{name}",
+    },
+
+    "custom/power": {
+        "format": " ⏻ ",
+        "tooltip": false,
+        "on-click": "wlogout --protocol layer-shell"
     },
 
     "tray": {

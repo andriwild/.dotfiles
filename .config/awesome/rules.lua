@@ -17,57 +17,57 @@ awful.rules.rules = {
       }
     },
 
-    -- Floating clients.
+    -- floating clients.
     { rule_any = {
         instance = {
-            "DTA",  -- Firefox addon DownThemAll.
-            "copyq",  -- Includes session name in class.
+            "dta",  -- firefox addon downthemall.
+            "copyq",  -- includes session name in class.
             "pinentry",
         },
         class = {
-            "Arandr",
-            "Blueman-manager",
-            "Gpick",
+            "arandr",
+            "blueman-manager",
+            "gpick",
             "awmtt",
-            "Kruler",
-            "MessageWin",  -- kalarm.
-            "Sxiv",
-            "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-            "Wpa_gui",
+            "kruler",
+            "messagewin",  -- kalarm.
+            "sxiv",
+            "tor browser", -- needs a fixed window size to avoid fingerprinting by screen size.
+            "wpa_gui",
             "veromix",
-			"Starter",
+			"starter",
             "xtightvncviewer"},
 
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
+        -- note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
         name = {
-            "Event Tester",  -- xev.
+            "event tester",  -- xev.
         },
         role = {
-            "AlarmWindow",  -- Thunderbird's calendar.
-            "ConfigManager",  -- Thunderbird's about:config.
-            "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+            "alarmwindow",  -- thunderbird's calendar.
+            "configmanager",  -- thunderbird's about:config.
+            "pop-up",       -- e.g. google chrome's (detached) developer tools.
         }
     }, properties = { floating = true }},
 
-    -- Add titlebars to normal clients and dialogs
+    -- add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
     }, properties = { titlebars_enabled = true }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
+    -- set firefox to always map on the tag named "2" on screen 1.
 
     { rule = { instance = "chromium" },
-      properties = { tag = beautiful.tagIcons[1] } },
+      properties = { tag = beautiful.tagicons[1] } },
 
     { rule = { class = "firefox" },
-      properties = { tag = beautiful.tagIcons[1], floating = false, maximized = false } },
+      properties = { tag = beautiful.tagicons[1], floating = false, maximized = false } },
 
     { rule = { instance = "nemo" },
-      properties = { tag = beautiful.tagIcons[4] } },
+      properties = { tag = beautiful.tagicons[4] } },
 
 --     { rule = { instance = "idea" },
---       properties = { tag = beautiful.tagIcons[2] } },
+--       properties = { tag = beautiful.tagicons[2] } },
 
     { rule = { instance = "alacritty" },
       properties = { opacity = 0.9} },

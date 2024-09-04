@@ -1,3 +1,4 @@
+exec --no-startup-id dbus-update-activation-environment --all
 include /etc/sway/config.d/*
 #========================#
 # Appearance and Theming # 
@@ -9,6 +10,7 @@ set $color_urgent #fb49ff
 set $text_color #ffffff
 set $title_bg_unfocused #666666
 set $title_outline_active #0e844e
+#set $title_outline_active #FF844e
 set $title_outline_unfocused #332b2b
 
 # Set Colors:           Border                   Background          Text          Indicator             Child Border
@@ -40,6 +42,7 @@ output * bg $HOME/.config/sway/wallpaper.jpg fill
 # Screenshot
 bindsym Mod4+p exec grimshot copy area
 bindsym Mod4+Shift+p exec grimshot save area
+bindsym Mod4+z exec grimshot save active
 
 #====================================#
 # Activate the panel                 #
@@ -66,12 +69,12 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec $HOME/.config/sway/exit.sh
 
 # Screen locking (automatic, with a timeout)
-set $lock swaylock -c 550000
-exec swayidle -w \
-    timeout 600 $lock \
-    timeout 570 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep $lock
+# set $lock swaylock -c 550000
+# exec swayidle -w \
+#     timeout 1600 $lock \
+#     timeout 1570 'swaymsg "output * dpms off"' \
+#     resume 'swaymsg "output * dpms on"' \
+#     before-sleep $lock
 
 # Screen locking (manual)
 set $lock_screen exec bash ~/.config/sway/lock_screen.sh
@@ -104,6 +107,9 @@ bindsym $mod+Shift+Right move right
 # to drag or resize a window respectively. This isn't exclusive
 # to floating windows:
 floating_modifier $mod normal
+
+# Floating mode windows:
+for_window [class="ch.fhnw.mitwelten.bricksapp.AppStarter"] floating enable
 
 # Resizing containers:
 mode "resize" {
@@ -223,7 +229,7 @@ bindsym XF86AudioPrev exec playerctl previous
 set $menu wofi --show drun  -i | xargs swaymsg exec --
 
 # Launch your browser:
-bindsym $mod+shift+b exec firefox
+bindsym $mod+Shift+b exec google-chrome-stable
 
 # Open a terminal emulator:
 set $term alacritty
@@ -237,6 +243,13 @@ bindsym $mod+space exec $menu
 
 # Open the application launcher (alternate version):
 bindsym $mod+d exec $menu
+
+
+#========#
+#  Mouse #
+#========#
+focus_follows_mouse no
+
 
 #==========#
 # Monitors #

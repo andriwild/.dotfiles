@@ -5,9 +5,9 @@
 # To Do: The fancier screen lock mentioned on that page might be cool to try.
 
 # Times the screen off and puts it to background
-swayidle \
-    timeout 10 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' &
+#swayidle \
+#    timeout 20 'swaymsg "output * dpms off"' \
+#    resume 'swaymsg "output * dpms on"' &
 
 # Locks the screen immediately
 swaylock -c 000000

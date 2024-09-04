@@ -26,5 +26,9 @@
     {
         "key": "ctrl+p",
         "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "alt+u",
+        "command": "github.copilot.toggleCopilot"
     }
 ]
