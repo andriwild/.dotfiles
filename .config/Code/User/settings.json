@@ -9,12 +9,19 @@
     "zig.zls.path": "/home/andri/.config/Code/User/globalStorage/ziglang.vscode-zig/zls_install/zls",
     "zig.formattingProvider": "off",
     "zig.zls.enableInlayHints": false,
+
     "workbench.colorTheme": "Visual Studio Dark",
-    "agdaMode.connection.agdaPath": "/usr/bin/agda",
 
     "editor.lineNumbers": "relative",
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
     "vim.leader": "<space>",
     "vim.useSystemClipboard": true,
+    "vim.vimrc.enable": true,
+    "vim.vimrc.path": "/home/andri/.config/vimrc",
     "vim.normalModeKeyBindingsNonRecursive": [
     {
         "before": ["<leader>", "t"],
@@ -62,5 +69,11 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
-}
+},
+"workbench.iconTheme": "file-icons",
+"files.associations": {
+    "*.xacro": "xml"
+},
+"redhat.telemetry.enabled": false,
+"remote.autoForwardPortsSource": "hybrid"
 }

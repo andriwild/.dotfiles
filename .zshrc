@@ -6,6 +6,9 @@ export ZSH="$HOME/.oh-my-zsh"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/opt/zig/"
 export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts/"
+export PATH="$PATH:/opt/minio-binaries/"
+export PATH="$PATH:/home/andri/.local/bin/bin"
+export PATH="$PATH:/opt/arduino-ide_2.3.3_Linux_64bit"
 export XDG_CURRENT_DESKTOP=sway
 [ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
 
@@ -145,32 +148,48 @@ alias HD="cd /run/media/andri/Ardita/"
 
 alias cabaltest="cabal test --test-show-detail=direct"
 
+# Fugitive
+alias G="nvim . -c G -c only"
+
 #Zig
 alias zrun="zig build run"
 alias ztest="zig build test"
 
 # Arduino
 alias up="arduino-cli compile && arduino-cli upload"
-alias serial="stty 9600 -F /dev/ttyUSB0 raw -echo && cat /dev/ttyUSB0"
+alias serial="stty 9600 -F /dev/ttyACM0 raw -echo && cat /dev/ttyACM0"
 alias acli="arduino-cli"
 
 # Python
 alias python="python3"
+alias py="python3"
 alias sou="source ./.venv/bin/activate"
 alias newenv="python3 -m venv .venv && source .venv/bin/activate"
+alias homieyaler="cd /home/andri/YalerTunnel/ && java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-2c-cf-67-30-50-4f-ssh &"
+alias homie4yaler="cd /home/andri/YalerTunnel/ && java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-dc-a6-32-18-6f-4d-ssh &"
 
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 
 # Docker
 alias dc="docker compose"
 
-# Joplin
-# alias todo="joplin use $1 && joplin mktodo $2"
-function todo() {
-  joplin use "$1"
-  joplin mktodo "$2"
-}
+# Formatted date
+alias fdate="date +'%R - %d.%b %Y'"
 
+# Git
+newrepo() {
+    repo_name=$(basename "$PWD")
+    git init 
+    touch README.md
+    git add README.md
+    git commit --allow-empty -m 'Initial commit'
+    echo "Repo name: $repo_name"
+    origin="git@github.com:andriwild/${repo_name}.git"
+    echo "Origin: $origin"
+    git remote add origin $origin
+    git push -u origin master
+    echo "New repo created on GitHub"
+}
 #IMVS
 #BruggEye
 # alias bruggeye-server="ssh -i /home/andri/.ssh/bruggEye_switch_engines.pem  ubuntu@86.119.41.12"
@@ -182,6 +201,7 @@ function todo() {
 
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias settings="gnome-control-center"
 
 
 # autoload -U +X bashcompinit && bashcompinit
@@ -203,3 +223,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/minio-binaries/mc mc
