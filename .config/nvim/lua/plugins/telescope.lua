@@ -1,121 +1,68 @@
 return {
   'nvim-telescope/telescope.nvim', tag = '0.1.5',
   dependencies = {
-    -- ui-select sets enables vim.ui.select to telescope
     'nvim-telescope/telescope-ui-select.nvim',
     'nvim-lua/plenary.nvim',
   },
+  config = function()
+    local builtin = require('telescope.builtin')
 
+    -- Telescope setup
+    require('telescope').setup({
+      defaults = {
+        mappings = {
+          i = {
+            ["<C-j>"] = "move_selection_next",
+            ["<C-k>"] = "move_selection_previous",
+          },
+        },
+        file_ignore_patterns = { "node_modules", ".git/" },
+        path_display = { "truncate" },
+      },
+      extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {}
+        }
+      }
+    })
 
-  -- config = function()
-  --   local telescope = require('telescope')
-  --   local actions = require('telescope.actions')
-  --   local action_state = require('telescope.actions.state')
-  --   local builtin = require('telescope.builtin')
-  --   local themes = require('telescope.themes')
+    -- Load the ui-select extension
+    require("telescope").load_extension("ui-select")
 
-  --   -- sends either all files, or if files are selected, all selected files to qf list
-  --   local smart_send_to_qflist = function(prompt_bufnr)
-  --       local picker = action_state.get_current_picker(prompt_bufnr)
-  --       local multi_selection = picker:get_multi_selection()
-
-  --       if #multi_selection > 0 then
-  --           -- only send selected
-  --           actions.send_selected_to_qflist(prompt_bufnr)
-  --       else
-  --           -- send all files
-  --           actions.send_to_qflist(prompt_bufnr)
-  --       end
-  --       actions.open_qflist(prompt_bufnr)
-  --   end
-
-
-  --   telescope.setup({
-  --     extensions = {
-  --       ['ui-select'] = {
-  --         themes.get_dropdown {
-  --           -- even more opts
-  --         }
-  --       }
-  --     },
-  --     defaults = {
-  --       file_ignore_patterns = { 'elm-stuff', 'node_modules', '.git' },
-  --       mappings = {
-  --         i = {
-  --           ["<C-q>"] = smart_send_to_qflist,  -- für Insert-Modus
-  --         },
-  --         n = {
-  --           ["<C-q>"] = smart_send_to_qflist,  -- für Normal-Modus
-  --         },
-  --       },
-  --     }
-  --   })
-
-  --   telescope.load_extension('ui-select')
-
-  --   -- indicates whether hidden files should be shown
-  keys = {
-    {
-      "<leader>sf",
-      function() require("telescope.builtin").find_files({}) end,
-      desc = "Find File",
-    },
-    {
-      "<leader>ss",
-      function() require("telescope.builtin").lsp_document_symbols() end,
-      desc = "Find LSP Symbol",
-    },
-    {
-      "<leader>ws",
-      function() require("telescope.builtin").lsp_workspace_symbols() end,
-      desc = "Find LSP Workspace Symbol",
-    },
-    {
-      "<leader>g",
-      function() require("telescope.builtin").git_files() end,
-      desc = "Find Git File",
-    },
-    {
-      "<leader>sh",
-      function() require("telescope.builtin").help_tags() end,
-      desc = "Search Help Tag",
-    },
-    {
-      "<leader>sw",
-      function() require("telescope.builtin").grep_string() end,
-      desc = "Search Word",
-    },
-    {
-      "<leader>sg",
-      function() require("telescope.builtin").live_grep({hidden = false}) end,
-      desc = "Live Grep String",
-    },
-    {
-      "<leader>sd",
-      function() require("telescope.builtin").diagnostics() end,
-      desc = "Search Diagnostics",
-    },
-    {
-      "<leader>x",
-      function() require("telescope.builtin").current_buffer_fuzzy_find(
+    -- Set up keybindings
+    vim.keymap.set('n', '<leader>sf', function() builtin.find_files({}) end, { desc = "Find File" })
+    vim.keymap.set('n', '<leader>ss', function() builtin.lsp_document_symbols() end, { desc = "Find LSP Symbol" })
+    vim.keymap.set('n', '<leader>ws', function() builtin.lsp_workspace_symbols() end, { desc = "Find LSP Workspace Symbol" })
+    vim.keymap.set('n', '<leader>g', function() builtin.git_files() end, { desc = "Find Git File" })
+    vim.keymap.set('n', '<leader>sh', function() builtin.help_tags() end, { desc = "Search Help Tag" })
+    vim.keymap.set('n', '<leader>sw', function() builtin.grep_string() end, { desc = "Search Word" })
+    vim.keymap.set('n', '<leader>sg', function() builtin.live_grep({hidden = false}) end, { desc = "Live Grep String" })
+    vim.keymap.set('n', '<leader>sd', function() builtin.diagnostics() end, { desc = "Search Diagnostics" })
+    vim.keymap.set('n', '<leader>x', function()
+      builtin.current_buffer_fuzzy_find(
         require('telescope.themes').get_dropdown{
           winblend = 10,
           previewer = false
         }
-        )
-      end,
-      desc = "Fuzzily search in current buffer",
-    },
-    {
-      "<leader>v",
-      function() require("telescope.builtin").treesitter() end,
-      desc = "Treesitter",
-    },
+      )
+    end, { desc = "Fuzzily search in current buffer" })
+    vim.keymap.set('n', '<leader>v', function() builtin.treesitter() end, { desc = "Treesitter" })
+
+    -- Add the spell suggest binding
+    vim.keymap.set('n', '<leader>zz', builtin.spell_suggest, { desc = 'Spell suggest' })
+  end,
+  -- Define keys for lazy loading
+  keys = {
+    { "<leader>sf", desc = "Find File" },
+    { "<leader>ss", desc = "Find LSP Symbol" },
+    { "<leader>ws", desc = "Find LSP Workspace Symbol" },
+    { "<leader>g", desc = "Find Git File" },
+    { "<leader>sh", desc = "Search Help Tag" },
+    { "<leader>sw", desc = "Search Word" },
+    { "<leader>sg", desc = "Live Grep String" },
+    { "<leader>sd", desc = "Search Diagnostics" },
+    { "<leader>x", desc = "Fuzzily search in current buffer" },
+    { "<leader>v", desc = "Treesitter" },
+    { "<leader>zz", desc = "Spell suggest" },
   }
-
-
-  --   vim.keymap.set('n', '<leader>hf', function()
-  --     hidden = not hidden
-  --     print("Show hidden files: " .. tostring(hidden))
-  --   end, { desc = 'Swap search [H]idden [F]iles' })
 }
