@@ -38,6 +38,7 @@ return {
     vim.keymap.set('n', '<leader>sw', function() builtin.grep_string() end, { desc = "Search Word" })
     vim.keymap.set('n', '<leader>sg', function() builtin.live_grep({hidden = false}) end, { desc = "Live Grep String" })
     vim.keymap.set('n', '<leader>sd', function() builtin.diagnostics() end, { desc = "Search Diagnostics" })
+    vim.keymap.set('n', '<leader>km', function() builtin.keymaps() end, { desc = "Search Keymappings" })
     vim.keymap.set('n', '<leader>x', function()
       builtin.current_buffer_fuzzy_find(
         require('telescope.themes').get_dropdown{
@@ -63,6 +64,7 @@ return {
     { "<leader>sd", desc = "Search Diagnostics" },
     { "<leader>x", desc = "Fuzzily search in current buffer" },
     { "<leader>v", desc = "Treesitter" },
+    { "<leader>km", desc = "Keymappings" },
     { "<leader>zz", desc = "Spell suggest" },
   }
 }
