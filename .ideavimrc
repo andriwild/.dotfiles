@@ -1,63 +1,73 @@
-""" https://gist.github.com/zchee/9c78f91cc5ad771c1f5d """"
+" plugins
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree'
 
-""" Map leader to space ---------------------
 let mapleader=" "
 
-""" Plugins  --------------------------------
-set surround
-set multiple-cursors
-set commentary
-set argtextobj
-set easymotion
-set textobj-entire
-set ReplaceWithRegister
-set relativenumber
+" intelliJ action list: https://gist.github.com/zchee/9c78f91cc5ad771c1f5d (or :actionlist)
+"" Source your .vimrc
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=8
+set relativenumber " disable mit set norelativenumber
 set number
-
-set clipboard=unnamedplus
-vnoremap <C-c> :w !wl-copy<CR><CR>
-nnoremap <C-v> :r !wl-paste<CR><CR>
-inoremap <C-v> <Esc>:r !wl-paste<CR><CR>i
-
-""" Plugin mettings -------------------------
-let g:argtextobj_pairs="[:],(:),<:>"
-
-""" Common settings -------------------------
-set showmode
-set so=5
 set incsearch
-set nu
 
-""" Idea specific settings ------------------
-set ideajoin
-set ideastatusicon=gray
+" enable line reordering with capital "j" & "k" in visual mode
+vnoremap J :m'>+1<CR>gv=gv
+vnoremap K :m'<-2<CR>gv=gv
 
-"""Mappings --------------------------------
-map <leader>f <Plug>(easymotion-s)
-map <leader>e <Plug>(easymotion-f)
+" keep selection when indenting
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
 
-map <leader>d <Action>(Debug)
-map <leader>r <Action>(RenameElement)<Esc>l
-map <leader>c <Action>(Stop)
-map <leader>g <Action>(Run)
-map <leader>z <Action>(ToggleDistractionFreeMode)
+" fuzzy finder
+map <leader>sf :action GotoFile<CR>
+map <leader>sg :action FindInPath<CR>
+map <leader>pf :action SelectInProjectView<CR>
 
-map <leader>s <Action>(SelectInProjectView)
-map <leader>a <Action>(Annotate)
-map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
-map <leader>2 <Action>(GotoNextError)
-map <leader>x <Action>(CloseEditor)
+" Nerdtree
+map <leader>pv :NERDTreeFocus<CR>
+map <leader>pt :NERDTreeToggle<CR>
 
-map <leader>b <Action>(ToggleLineBreakpoint)
-map <leader>o <Action>(FileStructurePopup)
-map <leader>t :action ActivateTerminalToolWindow<CR>
-map <leader>l :action ActivateDebugToolWindow<CR>
+" cursor stays in the middle with half page jumps
+nmap <C-d> <C-d>zz
+nmap <C-u> <C-u>zz
 
-map <C-d> <C-d>zz
-map <C-u> <C-u>zz
+" search terms stay in the middle
+nmap n nzzzv
+nmap N Nzzzv
 
-map<leader>sf :action GotoFile<CR>"open terminal
-
+" to/from system clipboard
 vmap <Leader>y "+y
 nmap <Leader>P "+P
-"""set clipboard+=unnamed
+
+" editor actions
+map <leader>l <Action>(ReformatCode)
+map <leader>r <Action>(RenameElement)<Esc>
+map <leader>8 <Action>(ToggleLineBreakpoint)
+map <leader>vd <Action>(ShowErrorDescription)
+map <leader><CR> :action ShowIntentionActions<CR>
+map <leader>ss <Action>(FileStructurePopup)
+map <leader>2 :action GotoNextError<CR>
+map gr :action FindUsages<CR>
+
+" run/debug
+map <leader>rd <Action>(Debug)
+map <leader>rr <Action>(Run)
+map <leader>rR <Action>(RunClass)
+map <leader>rc <Action>(Stop)
+
+" git
+map <leader>gd <Action>(Git.Stage.Compare.Local.Staged)
+map <leader>ga <Action>(Annotate)
+
+" tool windows
+map <leader>tt :action ActivateTerminalToolWindow<CR>
+map <leader>tr :action ActivateRunToolWindow<CR>
+map <leader>tg :action ActivateCommitToolWindow<CR>
+map <leader>tf :action ActivateFindToolWindow<CR>
+
+" Commands
+command! G :action ActivateCommitToolWindow

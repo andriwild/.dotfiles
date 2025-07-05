@@ -1,7 +1,8 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 12,
+    "output": "eDP-1",
+    "height": 24,
     "spacing": 2,
     "margin-top": 0,
     "margin-bottom": 0,
@@ -11,6 +12,7 @@
 
     "modules-right": [
       "tray", 
+      "wireplumber",
       "custom/audio",
       "network",
       "battery",
@@ -18,17 +20,17 @@
       "custom/power",
     ],
 
-    "backlight": {
-      "format": "{percent}% {icon}",
-      "format-icons": ["", ""]
-    },
-
-    // Configuration for individual modules
-     "sway/workspaces": {
-         "disable-scroll": true,
-         "all-outputs": true,
-         "format": "{name}",
-    },
+//    "backlight": {
+//      "format": "{percent}% {icon}",
+//      "format-icons": ["", ""]
+//    },
+//
+//    // Configuration for individual modules
+//     "sway/workspaces": {
+//         "disable-scroll": true,
+//         "all-outputs": true,
+//         "format": "{name}",
+//    },
 
     "custom/power": {
         "format": " ⏻ ",
@@ -43,7 +45,7 @@
 
     "clock": {
         "timezone": "Europe/Zurich",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+		//"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
     },
 
@@ -85,10 +87,17 @@
         "on-click": "pavucontrol",
     },
 
-    "custom/hostname": {
-        "format": "{}",
-        "exec": "/usr/bin/hostname -f",
-        "interval": "once",
-        "on-click": "/usr/bin/alacritty -e /usr/bin/htop",
+    "wireplumber": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "on-click": "helvum",
+        "format-icons": ["", "", ""]
     },
+
+//    "custom/hostname": {
+//        "format": "{}",
+//        "exec": "/usr/bin/hostname -f",
+//        "interval": "once",
+//        "on-click": "/usr/bin/alacritty -e /usr/bin/htop",
+//    },
 }

@@ -144,7 +144,7 @@ return {
         lspconfig.tinymist.setup({
             on_attach = function(client, bufnr)
                 local root_dir = client.config.root_dir or vim.fn.getcwd()
-                local mainFile = root_dir .. '/main.typ'
+                local mainFile = root_dir .. '/thesis.typ'
                 vim.lsp.buf.execute_command({
                     command = 'tinymist.pinMain',
                     arguments = { mainFile }

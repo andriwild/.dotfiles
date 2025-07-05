@@ -14,11 +14,11 @@ return {
       function() require("harpoon.ui").toggle_quick_menu() end,
       desc = "Toggle Harpoon UI"
     },
-    {
-      "<C-q>",
-      function() require("harpoon.ui").nav_file(1) end,
-      desc = "Harpoon File 1"
-    },
+    -- {
+    --   "<C-q>",
+    --   function() require("harpoon.ui").nav_file(1) end,
+    --   desc = "Harpoon File 1"
+    -- },
     {
       "<C-t>",
       function() require("harpoon.ui").nav_file(2) end,

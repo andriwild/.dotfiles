@@ -1,4 +1,6 @@
+#exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec --no-startup-id dbus-update-activation-environment --all
+#exec ./export.sh
 
 include /etc/sway/config.d/*
 #========================#
@@ -218,10 +220,16 @@ bindsym $mod+minus scratchpad show
 #===============================#
 # Keyboard Shortcuts (Hardware) #
 #===============================#
-# Audio
-bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; pkill -RTMIN+8 waybar"
-bindsym XF86AudioLowerVolume exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; pkill -RTMIN+8 waybar"
-bindsym XF86AudioMute exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -RTMIN+8 waybar"
+
+# Audio for wireplumber
+# bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; pkill -RTMIN+8 waybar"
+# bindsym XF86AudioLowerVolume exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; pkill -RTMIN+8 waybar"
+# bindsym XF86AudioMute exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -RTMIN+8 waybar"
+
+# for amixer
+bindsym XF86AudioRaiseVolume exec "amixer -D pulse sset Master 5%+"
+bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master 5%-"
+bindsym XF86AudioMute exec "amixer -D pulse set Master 1+ toggle"
 
 # Brightness
 bindsym XF86MonBrightnessDown exec light -U 10
@@ -240,7 +248,7 @@ bindsym XF86AudioPrev exec playerctl previous
 set $menu wofi --show drun  -i | xargs swaymsg exec --
 
 # Launch your browser:
-bindsym $mod+Shift+b exec google-chrome-stable
+bindsym $mod+Shift+b exec /opt/zen.linux-x86_64/zen/zen-bin
 
 # Open a terminal emulator:
 set $term alacritty

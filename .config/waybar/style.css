@@ -104,6 +104,7 @@ window#waybar {
 }
 
 #backlight,
+#wireplumber,
 #custom-power,
 #custom-audio {
     background: transparent;

@@ -10,7 +10,7 @@
     "zig.formattingProvider": "off",
     "zig.zls.enableInlayHints": false,
 
-    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorTheme": "Default Dark+",
 
     "editor.lineNumbers": "relative",
     "vim.easymotion": true,
@@ -70,10 +70,17 @@
     "markdown": false,
     "scminput": false
 },
-"workbench.iconTheme": "file-icons",
+"workbench.iconTheme": "material-icon-theme",
 "files.associations": {
     "*.xacro": "xml"
 },
 "redhat.telemetry.enabled": false,
-"remote.autoForwardPortsSource": "hybrid"
+"remote.autoForwardPortsSource": "hybrid",
+"python.locator": "js",
+"explorer.confirmDelete": false,
+"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4 }",
+"terminal.integrated.scrollback": 10000,
+"C_Cpp.default.includePath": [
+    "/usr/local/MATLAB/R2024b/rtw/c/src/"
+]
 }

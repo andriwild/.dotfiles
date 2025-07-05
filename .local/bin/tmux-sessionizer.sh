@@ -6,11 +6,10 @@ if [[ $# -eq 1 ]]; then
 else
 
 directories=(
-  $(find ~/ -mindepth 0 -maxdepth 0 -type d)
   $(find ~/fhnw/MSE -mindepth 1 -maxdepth 2 -type d)
   $(find ~/repos/ -mindepth 1 -maxdepth 1 -type d)
   $(find ~/workspace/ -mindepth 1 -maxdepth 2 -type d)
-  $(find ~/.config/ -mindepth 1 -maxdepth 1 -type d)
+  $(find ~/.config/ -mindepth 1 -maxdepth 1)
 ) 
 selected=$(echo $directories | tr " " "\n" | fzf)
 

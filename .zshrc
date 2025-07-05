@@ -9,8 +9,18 @@ export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts/"
 export PATH="$PATH:/opt/minio-binaries/"
 export PATH="$PATH:/home/andri/.local/bin/bin"
 export PATH="$PATH:/opt/arduino-ide_2.3.3_Linux_64bit"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:/opt/jetbrains-toolbox"
+export PATH="$PATH:/opt/typst-x86_64-unknown-linux-musl/"
+export PATH="$PATH:/opt/zen/zen.linux-x86_64/zen/zen-bin"
+export PATH="$PATH:/usr/local/go/bin"
+
 export XDG_CURRENT_DESKTOP=sway
 [ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
+
+# expand history size
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -18,27 +28,6 @@ export XDG_CURRENT_DESKTOP=sway
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="arrow"
 ZSH_THEME="awesomepanda"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -50,13 +39,13 @@ ZSH_THEME="awesomepanda"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -80,13 +69,14 @@ ZSH_THEME="awesomepanda"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    # aliases
-    zsh-syntax-highlighting 
+    dirhistory
+    aliases
     # zsh-autosuggestions 
     git 
     docker 
     docker-compose
     #zsh-vi-mode
+    zsh-syntax-highlighting 
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -168,7 +158,14 @@ alias newenv="python3 -m venv .venv && source .venv/bin/activate"
 alias homieyaler="cd /home/andri/YalerTunnel/ && java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-2c-cf-67-30-50-4f-ssh &"
 alias homie4yaler="cd /home/andri/YalerTunnel/ && java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-dc-a6-32-18-6f-4d-ssh &"
 
+
+alias settings="gnome-control-center"
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
+#
+# Colored Terminals
+#alias yellow-term="alacritty msg create-window -o 'colors.primary.background=#0000ff'"
+
+alias yellow-term='alacritty msg create-window -o '\''colors.primary.background="#ffff00"'\'''
 
 # Docker
 alias dc="docker compose"
@@ -176,53 +173,56 @@ alias dc="docker compose"
 # Formatted date
 alias fdate="date +'%R - %d.%b %Y'"
 
-# Git
-newrepo() {
-    repo_name=$(basename "$PWD")
-    git init 
-    touch README.md
-    git add README.md
-    git commit --allow-empty -m 'Initial commit'
-    echo "Repo name: $repo_name"
-    origin="git@github.com:andriwild/${repo_name}.git"
-    echo "Origin: $origin"
-    git remote add origin $origin
-    git push -u origin master
-    echo "New repo created on GitHub"
+# Launch matlab and fix no window bug
+alias matlab="env _JAVA_AWT_WM_NONREPARENTING=1 matlab" 
+
+# fkill - kill process
+fkill() {
+    local pid 
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi  
+
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi  
 }
-#IMVS
-#BruggEye
-# alias bruggeye-server="ssh -i /home/andri/.ssh/bruggEye_switch_engines.pem  ubuntu@86.119.41.12"
-# alias bruggeye-yaler="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-e4-5f-01-57-1c-1d-ssh"
-# alias bruggeye-yaler-backup="java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 dc-a6-32-03-31-80-ssh"
-# alias bruggeye-remove-ssh-keys="ssh-keygen -R '[localhost]:10022'"
-# alias bruggeye-gateway="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
-# alias bruggeye-gateway-backup="echo 'Yaler Tunnel acitv?' && ssh -i /home/andri/.ssh/bruggeye-edgegw-02.pem pi@localhost -p 10022 -o ServerAliveInterval=5"
+
+# fh - repeat history
+# fh – fuzzy-history with exact matching (-e/--exact)
+fh() {
+  local cmd
+  cmd=$(
+    ([ -n "$ZSH_NAME" ] && fc -l 1 || history)            |  # shell history
+    sed -E 's/^[[:space:]]*[0-9]+\*?[[:space:]]*//'       |  # strip numbers / “*”
+    tac                                                   |  # newest → oldest
+    awk '!seen[$0]++'                                     |  # drop duplicates
+    fzf --exact +s                                          # ⬅ exact (contiguous) match only
+  ) || return
+
+  print -z -- "${cmd//\\/\\\\}"                            # load into prompt
+}
 
 
-alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-alias settings="gnome-control-center"
-
-
-# autoload -U +X bashcompinit && bashcompinit
-# complete -o nospace -C /usr/bin/terraform terraform
+# ROS autocomplete enable for zsh
+eval "$(register-python-argcomplete3 ros2)"
+eval "$(register-python-argcomplete3 colcon)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
-# source /usr/share/nvm/init-nvm.sh
+export FZF_DEFAULT_OPTS='--height=80% --layout=reverse --info=inline --border --margin=1 --padding=1'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/minio-binaries/mc mc
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/minio-binaries/mc mc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

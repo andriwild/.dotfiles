@@ -1,6 +1,7 @@
 [user]
 	email = andri.wild@students.fhnw.ch
 	name = Andri Wild
+	signingkey = /home/andri/.ssh/id_rsa.pub
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -12,3 +13,7 @@ lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 lg = lg1
 [init]
 	defaultBranch = main
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
