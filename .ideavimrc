@@ -57,7 +57,7 @@ map gr :action FindUsages<CR>
 map <leader>rd <Action>(Debug)
 map <leader>rr <Action>(Run)
 map <leader>rR <Action>(RunClass)
-map <leader>rc <Action>(Stop)
+map <leader>s <Action>(Stop)
 
 " git
 map <leader>gd <Action>(Git.Stage.Compare.Local.Staged)
