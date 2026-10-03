@@ -1,4 +1,3 @@
-
 [[keyboard.bindings]]
 action = "Paste"
 key = "V"
@@ -8,6 +7,16 @@ mods = "Control|Shift"
 action = "Copy"
 key = "C"
 mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Alt"
 
 [[keyboard.bindings]]
 action = "PasteSelection"
@@ -420,7 +429,7 @@ history = 5000
 
 [window]
 dynamic_padding = false
-opacity = 0.95
+opacity = 0.98
 title = "Alacritty"
 
 [window.class]

@@ -1,16 +1,15 @@
 {
-    "window.menuBarVisibility": "toggle",
+
+    "window.menuBarVisibility": "compact",
     "editor.minimap.enabled": false,
     "zig.initialSetupDone": true,
     "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
+        "vscodevim.vim": 1
     },
     "zig.path": "/opt/zig/zig",
     "zig.zls.path": "/home/andri/.config/Code/User/globalStorage/ziglang.vscode-zig/zls_install/zls",
     "zig.formattingProvider": "off",
     "zig.zls.enableInlayHints": false,
-
-    "workbench.colorTheme": "Default Dark+",
 
     "editor.lineNumbers": "relative",
     "vim.easymotion": true,
@@ -50,6 +49,26 @@
     {
         "before": [ "<leader>", "2"],
         "commands": [ "editor.action.marker.next"]
+    },
+    {
+        "before": ["<leader>", "p", "v"],
+        "commands": ["workbench.files.action.focusFilesExplorer"]
+    },
+    {
+        "before": ["<leader>", "r", "r"],
+        "commands": ["cmake.launchTarget"]
+    },
+    {
+        "before": ["<leader>", "r", "d"],
+        "commands": ["cmake.debugTarget"]
+    },
+    {
+        "before": ["<leader>", "r", "t"],
+        "commands": ["cmake.ctest"]
+    },
+    {
+        "before": ["<leader>", "v", "t"],
+        "commands": ["workbench.view.testing.focus"]
     }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
@@ -79,8 +98,32 @@
 "python.locator": "js",
 "explorer.confirmDelete": false,
 "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4 }",
+"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
 "terminal.integrated.scrollback": 10000,
 "C_Cpp.default.includePath": [
     "/usr/local/MATLAB/R2024b/rtw/c/src/"
-]
+],
+"python.analysis.aiCodeActions": {
+    "implementAbstractClasses": true,
+    "generateSymbol": true,
+    "convertFormatString": true
+},
+"github.copilot.nextEditSuggestions.enabled": true,
+"idf.hasWalkthroughBeenShown": true,
+"idf.espIdfPath": "/home/andri/esp/v5.5.2/esp-idf",
+"idf.toolsPath": "/home/andri/.espressif",
+"idf.gitPath": "/usr/bin/git",
+"idf.pythonInstallPath": "/usr/bin/python3",
+
+"cmake.ctestArgs": ["--output-on-failure"],
+"cmake.configureSettings": {
+        "CMAKE_TOOLCHAIN_FILE": "/home/andri/repos/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    "dart.flutterSdkPath": "/home/andri/workspace/flutter/flutter",
+    "claudeCode.useTerminal": true,
+    "explorer.confirmDragAndDrop": false,
+    "workbench.colorTheme": "Visual Studio Dark - C++",
+    "debug.onTaskErrors": "showErrors"
+
 }
+

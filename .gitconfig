@@ -17,3 +17,5 @@ lg = lg1
 	format = ssh
 [commit]
 	gpgsign = true
+[core]
+	autocrlf = input
