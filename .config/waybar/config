@@ -3,7 +3,7 @@
     "position": "top",
     "output": "eDP-1",
     "height": 24,
-    "spacing": 2,
+    "spacing": 4,
     "margin-top": 0,
     "margin-bottom": 0,
 
@@ -12,18 +12,18 @@
 
     "modules-right": [
       "tray", 
-      "wireplumber",
-      "custom/audio",
+      //"backlight",
       "network",
+      "custom/audio",
       "battery",
       "clock",
       "custom/power",
     ],
 
-//    "backlight": {
-//      "format": "{percent}% {icon}",
-//      "format-icons": ["", ""]
-//    },
+   "backlight": {
+     "format": "{percent}% {icon}",
+     "format-icons": ["", ""]
+   },
 //
 //    // Configuration for individual modules
 //     "sway/workspaces": {

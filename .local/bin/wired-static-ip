@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# Pick a wired interface via wofi, enter a static IP, apply via NetworkManager.
+set -euo pipefail
+
+notify() { notify-send -a "wired-static-ip" "$@"; }
+fail()   { notify -u critical "$1" "${2:-}"; exit 1; }
+
+# 1. Pick a wired interface (only ethernet devices NM manages)
+ifaces=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="ethernet"{print $1}')
+[ -z "$ifaces" ] && fail "No ethernet interfaces found"
+
+# Describe one device as a picker row: link marker, name, negotiated speed,
+# adapter product name, current IP. Carrier alone doesn't identify the RJ45
+# port — USB gadgets (RNDIS/NCM) report carrier "on" permanently — so the
+# product name and speed are what actually tell the ports apart.
+describe() {
+  local n=$1 carrier product ip speed mark link
+  carrier=$(nmcli -g WIRED-PROPERTIES.CARRIER device show "$n" 2>/dev/null || true)
+  product=$(nmcli -g GENERAL.PRODUCT device show "$n" 2>/dev/null || true)
+  # -t (not -g) so a device with several IPs yields one per line instead of
+  # "a | b" joined onto one.
+  ip=$(nmcli -t -f IP4.ADDRESS device show "$n" 2>/dev/null | head -n1 | cut -d: -f2- || true)
+  speed=$(cat "/sys/class/net/$n/speed" 2>/dev/null || echo -1)
+
+  if [ "$carrier" = "on" ]; then
+    mark="*"
+    if [[ "$speed" =~ ^[0-9]+$ ]] && [ "$speed" -gt 0 ]; then
+      link="${speed} Mb/s"
+    else
+      link="Link"
+    fi
+  else
+    mark=" "
+    link="kein Kabel"
+  fi
+
+  printf '%s %-16s %-10s %-32.32s %s\n' \
+    "$mark" "$n" "$link" "${product:-unbekannt}" "$ip"
+}
+
+# Cabled interfaces first, so the one you just plugged in is preselected.
+# LC_ALL=C is load-bearing: a UTF-8 locale collates the leading "*"/" " marker
+# away, which silently mixes the cable-less devices back into the list.
+rows=$(for n in $ifaces; do describe "$n"; done | LC_ALL=C sort -r)
+
+choice=$(printf '%s\n' "$rows" | wofi --dmenu --prompt "Wired interface" --width 900 --height 300) || exit 0
+[ -z "$choice" ] && exit 0
+# Both markers are 2 ASCII bytes, so the name always starts at offset 2.
+iface=$(printf '%s\n' "${choice:2}" | awk '{print $1}')
+[ -z "$iface" ] && exit 0
+
+# 2. Prompt for IP. Pre-fill with current IP on that device (if any) so it's
+#    easy to tweak the last octet.
+current=$(nmcli -t -f IP4.ADDRESS device show "$iface" 2>/dev/null | head -n1 | cut -d: -f2-)
+ip=$(printf '%s\n' "$current" | wofi --dmenu --prompt "IP/CIDR for $iface" --width 500 --height 200) || exit 0
+[ -z "$ip" ] && exit 0
+
+# Allow bare IPs — default to /24
+[[ "$ip" == */* ]] || ip="${ip}/24"
+
+# Sanity-check format: a.b.c.d/nn
+if ! [[ "$ip" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}$ ]]; then
+  fail "Invalid IP" "$ip"
+fi
+
+# 3. Find the connection currently bound to this device, or create one.
+con=$(nmcli -t -f NAME,DEVICE connection show --active \
+        | awk -F: -v d="$iface" '$2==d{print $1; exit}')
+
+if [ -z "$con" ]; then
+  con="static-$iface"
+  nmcli connection add type ethernet ifname "$iface" con-name "$con" \
+        ipv4.method manual ipv4.addresses "$ip" \
+        ipv4.gateway "" ipv6.method ignore >/dev/null
+else
+  nmcli connection modify "$con" \
+        ipv4.method manual ipv4.addresses "$ip" \
+        ipv4.gateway "" >/dev/null
+fi
+
+# 4. Re-activate so the change actually hits the running interface.
+nmcli connection down "$con" >/dev/null 2>&1 || true
+if nmcli connection up "$con" >/dev/null 2>&1; then
+  notify "Static IP set" "$iface → $ip ($con)"
+else
+  fail "Failed to bring up $con" "Check 'journalctl -u NetworkManager'"
+fi

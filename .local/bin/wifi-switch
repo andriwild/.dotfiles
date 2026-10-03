@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Pick a saved Wi-Fi network via wofi and activate it. No password prompts.
+set -euo pipefail
+
+notify() { notify-send -a "wifi-switch" "$@"; }
+fail()   { notify -u critical "$1" "${2:-}"; exit 1; }
+
+# Trigger an async rescan so the saved-network list lines up with reality
+# next time. Don't wait for it — switching saved profiles works regardless.
+nmcli device wifi rescan >/dev/null 2>&1 || true
+
+# Currently active wifi connection (if any)
+active=$(nmcli -t -f NAME,TYPE connection show --active \
+          | awk -F: '$2=="802-11-wireless"{print $1; exit}')
+
+# All saved wifi connection profiles
+saved=$(nmcli -t -f NAME,TYPE connection show \
+          | awk -F: '$2=="802-11-wireless"{print $1}')
+
+[ -z "$saved" ] && fail "No saved Wi-Fi networks"
+
+# Mark active one with "* ", others with "  ". Both prefixes are 2 ASCII bytes.
+list=$(printf '%s\n' "$saved" | awk -v a="$active" '{
+  printf "%s %s\n", ($0 == a ? "*" : " "), $0
+}')
+
+choice=$(printf '%s\n' "$list" | wofi --dmenu --prompt "Wi-Fi" --width 400 --height 400) || exit 0
+[ -z "$choice" ] && exit 0
+
+target="${choice:2}"
+
+# Already on it — nothing to do.
+[ "$target" = "$active" ] && exit 0
+
+if nmcli connection up "$target" >/dev/null 2>&1; then
+  notify "Wi-Fi" "→ $target"
+else
+  fail "Failed to connect" "$target (out of range?)"
+fi

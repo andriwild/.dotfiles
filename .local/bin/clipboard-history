@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Pick a clipboard entry from cliphist history via wofi and copy it back.
+set -euo pipefail
+
+choice=$(cliphist list | wofi --dmenu --prompt "Clipboard" --width 700 --height 500) || exit 0
+[ -z "$choice" ] && exit 0
+
+printf '%s' "$choice" | cliphist decode | wl-copy

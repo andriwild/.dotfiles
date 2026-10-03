@@ -1,11 +1,19 @@
 #exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec --no-startup-id dbus-update-activation-environment --all
+
+# Clipboard history: feed every clipboard change into cliphist
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
 #exec ./export.sh
 
 include /etc/sway/config.d/*
+
+# Key remapping (Alt+C/V for copy/paste system-wide)
+exec xremap ~/.config/xremap/config.yml
+
 #========================#
-# Appearance and Theming # 
-#========================# 
+# Appearance and Theming #
+#========================#
 # Declare Colors:
 set $background #332b2b
 set $color_urgent #fb49ff
@@ -73,16 +81,20 @@ bindsym $mod+Shift+e exec $HOME/.config/sway/exit.sh
 bindsym $mod+e exec $HOME/.config/sway/wofi_dirs.sh "/home/andri/repos" "/home/andri/fhnw/imvs"
 
 # Screen locking (automatic, with a timeout)
-set $lock swaylock -c 550000
-exec swayidle -w \
-    timeout 1600 $lock \
-    timeout 1570 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep $lock
+# set $lock swaylock -c 550000
+# exec swayidle -w \
+#     timeout 1600 $lock \
+#     timeout 1570 'swaymsg "output * dpms off"' \
+#     resume 'swaymsg "output * dpms on"' \
+#     before-sleep $lock
 
-# Screen locking (manual)
+# Screen locking with idling (manual)
 set $lock_screen exec bash ~/.config/sway/lock_screen.sh
 bindsym $mod+Escape exec $lock_screen
+
+# Screen lock (manual)
+set $lock exec bash ~/.config/sway/lock.sh
+bindsym $mod+tab exec $lock
 
 
 # Screenshot
@@ -123,6 +135,10 @@ floating_modifier $mod normal
 
 # Floating mode windows:
 for_window [class="ch.fhnw.mitwelten.bricksapp.AppStarter"] floating enable
+for_window [class="^CMake*"] floating enable
+for_window [app_id="^ip9*"] floating enable
+for_window [app_id="^ip9*"] border normal
+for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
 
 # Resizing containers:
 mode "resize" {
@@ -197,7 +213,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+Shift+f floating toggle
 
 # Swap focus between the tiling area and the floating area
-bindsym $mod+tab focus mode_toggle
+# bindsym $mod+tab focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+a focus parent
@@ -222,14 +238,17 @@ bindsym $mod+minus scratchpad show
 #===============================#
 
 # Audio for wireplumber
+bindsym --no-repeat XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+8 waybar
+bindsym --no-repeat XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+8 waybar
+bindsym --no-repeat XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+8 waybar
 # bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; pkill -RTMIN+8 waybar"
 # bindsym XF86AudioLowerVolume exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; pkill -RTMIN+8 waybar"
 # bindsym XF86AudioMute exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -RTMIN+8 waybar"
 
 # for amixer
-bindsym XF86AudioRaiseVolume exec "amixer -D pulse sset Master 5%+"
-bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master 5%-"
-bindsym XF86AudioMute exec "amixer -D pulse set Master 1+ toggle"
+# bindsym XF86AudioRaiseVolume exec "amixer -D pulse sset Master 5%+"
+# bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master 5%-"
+# bindsym XF86AudioMute exec "amixer -D pulse set Master 1+ toggle"
 
 # Brightness
 bindsym XF86MonBrightnessDown exec light -U 10
@@ -263,6 +282,15 @@ bindsym $mod+space exec $menu
 # Open the application launcher (alternate version):
 bindsym $mod+d exec $menu
 
+# Set static IP on a wired interface (wofi prompt):
+bindsym $mod+n exec $HOME/.local/bin/wired-static-ip
+
+# Switch Wi-Fi network (wofi picker, saved networks only):
+bindsym $mod+w exec $HOME/.local/bin/wifi-switch
+
+# Clipboard history (cliphist + wofi):
+bindsym $mod+Shift+v exec $HOME/.local/bin/clipboard-history
+
 
 #========#
 #  Mouse #
@@ -273,11 +301,14 @@ focus_follows_mouse no
 #==========#
 # Monitors #
 #==========#
+
+# Get available outputs: swaymsg -t get_outputs
+
 set $builtin "eDP-1" 
 set $Dell_4k "Dell Inc. DELL P2723QE 4WPQYV3" 
-set $AOC "Unknown 2369M AGKF99A000332" 
-set $HP_Vertical "Unknown HP Z24n G2 6CM9461P54"
-set $HP_Center "Unknown HP Z24n G2 6CM9461NZB"
+set $AOC "AOC 2369M AGKF99A000332" 
+set $HP_Vertical "HP Inc. HP Z24n G2 6CM9461P54"
+set $HP_Center "HP Inc. HP Z24n G2 6CM9461NZB"
 
 # Laptop
 output $builtin mode 1920x1200 pos 0 0 scale 1
