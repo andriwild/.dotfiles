@@ -16,7 +16,7 @@ return {
             ["<C-k>"] = "move_selection_previous",
           },
         },
-        file_ignore_patterns = { "node_modules", ".git/" },
+        file_ignore_patterns = { "node_modules", ".git/", "third_party/", "tests", "test" },
         path_display = { "truncate" },
       },
       extensions = {

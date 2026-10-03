@@ -7,7 +7,7 @@ return {
     "nvim-lua/plenary.nvim",
   },
   opts = {
-    ui = { enable = false },
+    ui = { enable = true },
     workspaces = {
       {
         name = "wiki",

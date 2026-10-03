@@ -5,8 +5,8 @@ end
 
 -- Make sure the theme is added to the packages:
 -- (use{"catppuccin/nvim", as ="catppuccin"})
-local NVIM_LIGHT = "catppuccin"
-local NVIM_DARK  = "rose-pine"
+local NVIM_LIGHT = "kanagawa-wave"
+local NVIM_DARK  = "kanagawa-dragon"
 
 local ALACRITTY_LIGHT = "colors: *Light"
 local ALACRITTY_DARK  = "# colors: *Light"
@@ -23,18 +23,17 @@ local ALACRITTY_CONFIG = "~/.config/alacritty/alacritty.yml"
 function ColorMyPencils(color)
 	color = color or NVIM_DARK
 	vim.cmd.colorscheme(color)
-
     local background = "none"
-    if color == NVIM_DARK then
+    
+    if color == NVIM_DARK or color == "kanagawa-wave" or color == "kanagawa-dragon" then
         vim.cmd("set background=dark")
     else
         vim.cmd("set background=light")
         background = "#f8f8f2"
     end
-
+    
 	vim.api.nvim_set_hl(0, "Normal", { bg = background })
     vim.api.nvim_set_hl(0, "NormalNC", { bg = background })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = background })
 end
 
 -- Since tmux does not have an option for live reload, 

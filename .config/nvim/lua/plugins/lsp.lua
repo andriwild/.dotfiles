@@ -1,260 +1,188 @@
 return {
     "VonHeikemen/lsp-zero.nvim",
     dependencies = {
-        -- LSP Support
-        'neovim/nvim-lspconfig',
-        'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim',
-
-        -- Autocompletion
-        'hrsh7th/nvim-cmp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'saadparwaiz1/cmp_luasnip',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-nvim-lua',
-
-        -- Snippets
-        'L3MON4D3/LuaSnip',
-        'rafamadriz/friendly-snippets',
+        "neovim/nvim-lspconfig",
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "hrsh7th/nvim-cmp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-nvim-lua",
+        "L3MON4D3/LuaSnip",
+        "rafamadriz/friendly-snippets",
     },
+
+
     config = function()
+        local notify = vim.notify
+        vim.notify = function(msg, ...)
+            if msg:match("lspconfig.*deprecated") then return end
+            notify(msg, ...)
+        end
 
-        local lsp = require('lsp-zero')
-        local lspconfig = require('lspconfig')
+        local lsp = require("lsp-zero")
+        local lspconfig = require("lspconfig")
 
-        lsp.ui({
-            float_border = 'rounded',
-            sign_text = {
-                error = '✘',
-                warn = '▲',
-                hint = '⚑',
-                info = '»',
-            },
+        lsp.extend_lspconfig()
 
-        })
+        local function switch_source_header(bufnr)
+            vim.lsp.buf_request(bufnr, "textDocument/switchSourceHeader", { uri = vim.uri_from_bufnr(bufnr) }, function(err, result)
+                if err then
+                    vim.notify(tostring(err), vim.log.levels.ERROR)
+                    return
+                end
+                if not result or result == "" then
+                    vim.notify("clangd: keine zugehörige Datei gefunden", vim.log.levels.WARN)
+                    return
+                end
+                vim.cmd.edit(vim.uri_to_fname(result))
+            end)
+        end
 
-        -- lsp.preset({
-        --   sign_text = {
-        --     error = '✘',
-        --     warn = '▲',
-        --     hint = '⚑',
-        --     info = '»'
-        --   },
-        --   float_border = 'rounded',
-        --   call_servers = 'local',
-        --   configure_diagnostics = true,
-        --   setup_servers_on_start = true,
-        --   set_lsp_keymaps = {
-        --     preserve_mappings = false,
-        --     omit = {},
-        --   },
-        --   manage_nvim_cmp = {
-        --     set_sources = 'recommended',
-        --     set_basic_mappings = true,
-        --     set_extra_mappings = false,
-        --     use_luasnip = true,
-        --     set_format = true,
-        --     documentation_window = true,
-        --   },
-        -- }) -- presets documentation: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#recommended
-
-        --keys = {
-        --  {
-        --    "<leader>gs",
-        -- e  function() vim.cmd.Git() end,
-        --    desc = "Find File",
-        --  },
-        --}
-
-
-        -- commands defined in on_attach are only available when lsp is running on that buffer
-        -- with that, default vim LSP will be used if lst-zero is not available for a file.
         lsp.on_attach(function(client, bufnr)
-            local opts = {buffer = bufnr, remap = false}
-
+            local opts = { buffer = bufnr, remap = false }
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+            if client.name == "clangd" then
+                vim.keymap.set("n", "<leader>oh", function() switch_source_header(bufnr) end, opts)
+            end
             vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-            vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references, opts)
+            vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, opts)
             vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
             vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
             vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
             vim.keymap.set("n", "<leader>2", vim.diagnostic.goto_next, opts)
             vim.keymap.set("n", "<leader>3", vim.diagnostic.goto_prev, opts)
-            vim.keymap.set({"n", "v"}, "<leader><CR>", vim.lsp.buf.code_action, opts)
+            vim.keymap.set({ "n", "v" }, "<leader><CR>", vim.lsp.buf.code_action, opts)
             vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
             vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
-            -- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-
-            vim.keymap.set('n', '<leader>gd', function()
-                vim.cmd('wincmd v')
+            vim.keymap.set("n", "<leader>gd", function()
+                vim.cmd("wincmd v")
                 vim.lsp.buf.definition()
-            end, { noremap=true, silent=true })
+            end, { noremap = true, silent = true })
         end)
 
-        require('mason').setup({})
-        require('mason-lspconfig').setup({
-            ensure_installed = {"tinymist"},
-            handlers = {
-                lsp.default_setup,
-                -- lua_ls = function()
-                --   local lua_opts = lsp_zero.nvim_lua_ls()
-                --   require('lspconfig').lua_ls.setup(lua_opts)
-                -- end,
-            }
+
+        vim.diagnostic.config({
+            virtual_text = true,
+            signs = true,
+            update_in_insert = false,
+            underline = true,
+            severity_sort = true,
+            float = {
+                focusable = false,
+                style = "minimal",
+                border = "single",
+                source = "always",
+                header = "",
+                prefix = "",
+            },
         })
 
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+            vim.lsp.handlers.hover, {
+                border = "rounded",
+                title = " Documentation "
+            }
+        )
 
-        local cmp = require('cmp')
-        local cmp_select = {behavior = cmp.SelectBehavior.Select}
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+            vim.lsp.handlers.signature_help, {
+                border = "rounded",
+                close_events = { "BufHidden", "InsertLeave" },
+            }
+        )
+
+        lsp.ui({
+            float_border = "rounded",
+            sign_text = { error = "✘", warn = "▲", hint = "⚑", info = "»" },
+        })
+
+        require("mason").setup({})
+        require("mason-lspconfig").setup({
+            ensure_installed = { "tinymist", "lua_ls", "eslint" },
+            handlers = {
+                lsp.default_setup,
+
+                lua_ls = function()
+                    lspconfig.lua_ls.setup({
+                        settings = {
+                            Lua = { diagnostics = { globals = { "vim" } } },
+                        },
+                    })
+                end,
+
+                eslint = function()
+                    lspconfig.eslint.setup({
+                        on_attach = function(client, bufnr)
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = bufnr,
+                                command = "EslintFixAll",
+                            })
+                        end,
+                    })
+                end,
+
+                tinymist = function()
+                    lspconfig.tinymist.setup({
+                        offset_encoding = "utf-8",
+                        settings = {
+                            formatterMode = "typstyle",
+                            exportPdf = "onSave",
+                        },
+                        on_attach = function(client, bufnr)
+                            local root_dir = client.config.root_dir or vim.fn.getcwd()
+                            local mainFile = root_dir .. "/thesis.typ"
+                            
+                            -- Pcall nutzen, falls der Befehl fehlschlägt
+                            pcall(function() 
+                                vim.lsp.buf.execute_command({
+                                    command = "tinymist.pinMain",
+                                    arguments = { mainFile },
+                                })
+                            end)
+
+                            local opts = { buffer = bufnr, remap = false }
+                            vim.keymap.set("n", "<leader>rr", function()
+                                local current = vim.fn.bufnr("%")
+                                vim.cmd("e " .. mainFile)
+                                vim.cmd.TypstPreview()
+                                vim.cmd("buffer " .. current)
+                            end, opts)
+
+                            vim.keymap.set("n", "<leader>rc", function()
+                                local current = vim.fn.bufnr("%")
+                                vim.cmd("e " .. mainFile)
+                                vim.cmd.TypstPreviewStop()
+                                vim.cmd("buffer " .. current)
+                            end, opts)
+                        end,
+                    })
+                end,
+            },
+        })
+
+        local cmp = require("cmp")
+        local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
         cmp.setup({
             sources = {
-                {name = 'path'},
-                {name = 'nvim_lsp'},
-                {name = 'nvim_lua'},
-                {name = 'luasnip', keyword_length = 2},
-                {name = 'buffer', keyword_length = 3},
+                { name = "path" },
+                { name = "nvim_lsp" },
+                { name = "nvim_lua" },
+                { name = "luasnip", keyword_length = 2 },
+                { name = "buffer", keyword_length = 3 },
             },
             formatting = lsp.cmp_format(),
             mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+                ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+                ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+                ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                ["<Enter>"] = cmp.mapping.confirm({ select = true }),
                 ["<C-Enter>"] = cmp.mapping.complete(),
-                ['<Tab>'] = {
-                    i = cmp.config.disable, -- disble tab in insert mode, use <C-p> for that!
-                    c = cmp.config.disable
-                },
-            })
+                ["<Tab>"] = cmp.config.disable,
+            }),
         })
-
-        lspconfig.eslint.setup({
-            on_attach = function(client, bufnr)
-                -- fix all autofixables on save
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    buffer = bufnr,
-                    command = "EslintFixAll",
-                })
-            end,
-        })
-
-
-        lspconfig.tinymist.setup({
-            on_attach = function(client, bufnr)
-                local root_dir = client.config.root_dir or vim.fn.getcwd()
-                local mainFile = root_dir .. '/thesis.typ'
-                vim.lsp.buf.execute_command({
-                    command = 'tinymist.pinMain',
-                    arguments = { mainFile }
-                })
-
-                local opts = {buffer = bufnr, remap = false}
-                -- run preview
-                vim.keymap.set("n", "<leader>rr", function()
-                    -- get current buffer number
-                    local current = vim.fn.bufnr("%")
-                    -- open mainfile
-                    vim.cmd("e " .. mainFile)
-                    -- run command
-                    vim.cmd.TypstPreview()
-                    -- reselect previous buffer
-                    vim.cmd("buffer " .. current)
-                end, opts)
-                -- stop preview
-                vim.keymap.set("n", "<leader>rc", function()
-                    -- get current buffer number
-                    local current = vim.fn.bufnr("%")
-                    -- open mainfile
-                    vim.cmd("e " .. mainFile)
-                    -- run command
-                    vim.cmd.TypstPreviewStop()
-                    -- reselect previous buffer
-                    vim.cmd("buffer " .. current)
-                end, opts)
-            end,
-
-            offset_encoding = "utf-8",
-            settings = {
-                formatterMode = "typstyle",
-                exportPdf = "onSave",
-            },
-        })
-
-        -- lspconfig.arduino_language_server.setup({
-        --         cmd = {
-        --             "arduino-language-server",
-        --             "-clangd",      "/usr/bin/clangd",
-        --             "-cli",         "/home/andri/.local/bin/arduino-cli",
-        --             "-cli-config",  "/home/andri/.arduino15/arduino-cli.yaml",
-        --             "-fqbn",  "adafruit:nrf52:feather52840sense"
-        --         }
-        --     })
-
-        lspconfig.lua_ls.setup({
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = {'vim'},
-                    },
-                },
-            },
-
-        })
-
-        require("mason-lspconfig").setup({
-
-        })
-
-        -- tsserver shows always two definitions for react components. this fixes it
-        local tsHandlers = {
-            ["textDocument/definition"] = function(_, result, params)
-                local util = require("vim.lsp.util")
-                if result == nil or vim.tbl_isempty(result) then
-                    -- local _ = vim.lsp.log.info() and vim.lsp.log.info(params.method, "No location found")
-                    return nil
-                end
-
-                if vim.tbl_islist(result) then
-                    -- this is opens a buffer to that result
-                    -- you could loop the result and choose what you want
-                    util.jump_to_location(result[1], "utf-8")
-
-                    if #result > 1 then
-                        local isReactDTs = false
-                        ---@diagnostic disable-next-line: unused-local
-                        for key, value in pairs(result) do
-                            if string.match(value.targetUri, "react/index.d.ts") then
-                                isReactDTs = true
-                                break
-                            end
-                        end
-                    end
-                else
-                    util.jump_to_location(result, "utf-8")
-                end
-            end,
-        }
-
-        -- lspconfig.tsserver.setup({
-        --   handlers = tsHandlers
-        -- })
-
-
-
-        -- lsp.configure('hls', {
-        --   --cmd = {"/home/andri/.ghcup/bin/haskell-language-server-2.2.0.0", "--lsp"}
-        --   --cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.9.1.0", "--lsp"}
-        --   cmd = {"/home/andri/.ghcup/hls/2.2.0.0/lib/haskell-language-server-2.2.0.0/bin/haskell-language-server-wrapper", "--lsp"}
-        -- })
-
-        --lspconfig.hls.setup({
-        ----cmd = {"/home/andri/.ghcup/bin/haskell-language-server-2.2.0.0", "--lsp"}
-        ----cmd = {"/home/andri/.ghcup/bin/haskell-language-server-wrapper-1.9.1.0", "--lsp"}
-        --cmd = {"/home/andri/.ghcup/hls/2.5.0.0/lib/haskell-language-server-2.5.0.0/bin/haskell-language-server-wrapper", "--lsp"}
-        --})
-
-    end
+    end,
 }

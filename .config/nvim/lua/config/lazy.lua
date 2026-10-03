@@ -19,4 +19,5 @@ lazy.setup("plugins")
 vim.keymap.set("n", "<leader>L", lazy.show)
 
 require("config.color")
-ColorMyPencils("rose-pine")
+ColorMyPencils("kanagawa")
+vim.cmd("colorscheme kanagawa-dragon")

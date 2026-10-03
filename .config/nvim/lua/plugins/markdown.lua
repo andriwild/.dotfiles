@@ -13,9 +13,9 @@ return {
     md.setup({
       code = {
         enabled = true,
-        background = {
-          highlight = "RDMdCodeBg",
-        },
+        -- background = {
+        --   highlight = "RDMdCodeBg",
+        -- },
       },
 
       bullet = {

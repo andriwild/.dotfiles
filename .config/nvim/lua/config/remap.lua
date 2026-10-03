@@ -31,7 +31,7 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader>'", ":lua ToggleTheme()<CR>")
 
 vim.keymap.set("n", "<leader>Z", ":PlenaryBustedFile %<CR>")
-
+vim.opt.clipboard = "unnamedplus"
  
 -- Snips plugin (not yet installed)
 --vim.keymap.set("n", "<leader>s", ":Snips<CR>")

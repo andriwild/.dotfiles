@@ -1,57 +1,51 @@
---return {
---  "catppuccin/nvim",
---  lazy = true,
---  name = "catppuccin",
---  opts = {
---    integrations = {
---      aerial = true,
---      alpha = true,
---      cmp = true,
---      dashboard = true,
---      flash = true,
---      gitsigns = true,
---      headlines = true,
---      illuminate = true,
---      indent_blankline = { enabled = true },
---      leap = true,
---      lsp_trouble = true,
---      mason = true,
---      markdown = true,
---      mini = true,
---      native_lsp = {
---        enabled = true,
---        underlines = {
---          errors = { "undercurl" },
---          hints = { "undercurl" },
---          warnings = { "undercurl" },
---          information = { "undercurl" },
---        },
---      },
---      navic = { enabled = true, custom_bg = "lualine" },
---      neotest = true,
---      neotree = true,
---      noice = true,
---      notify = true,
---      semantic_tokens = true,
---      telescope = true,
---      treesitter = true,
---      treesitter_context = true,
---      which_key = true,
---    },
---  },
---}
---
-
 return {
-  "rose-pine/neovim",
-  name = "rose-pine",
-  lazy = false,
-  config = function ()
-    local scheme = require("rose-pine")
-    scheme.setup({
-	highlight_groups = {
-        colorcolumn = { bg = "highlight_low"},
-	},
-  })
-  end
+    "rebelot/kanagawa.nvim",
+    config = function()
+        require('kanagawa').setup({
+            compile = false,             -- enable compiling the colorscheme
+            undercurl = true,            -- enable undercurls
+            commentStyle = { italic = true },
+            functionStyle = {},
+            keywordStyle = { italic = true},
+            statementStyle = { bold = true },
+            typeStyle = {},
+            transparent = true,         -- do not set background color
+            dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+            terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+            colors = {
+                palette = {},
+                theme = {
+                    wave = {},
+                    lotus = {},
+                    dragon = {},
+                    all = {
+                        ui = {
+                            bg_gutter = "none"
+                        }
+                    }
+                },
+            },
+            overrides = function(colors)
+                local theme = colors.theme
+                return {
+                    NormalFloat = { bg = theme.ui.bg_m3 },
+                    FloatBorder = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+                    FloatTitle = { bg = theme.ui.bg_m3 },
+
+                    Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
+                    PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+                    PmenuSbar = { bg = theme.ui.bg_m1 },
+                    PmenuThumb = { bg = theme.ui.bg_p2 },
+
+                    LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+                    MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+                }
+            end,
+            theme = "dragon",
+            background = {
+                dark = "dragon",           -- oder "dragon" für späte Nacht-Sessions
+                light = "wave"
+            },
+        })
+    end
 }
