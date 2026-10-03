@@ -4,23 +4,32 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:/opt/zig/"
+# export PATH="$PATH:/opt/zig/"
 export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts/"
-export PATH="$PATH:/opt/minio-binaries/"
+# export PATH="$PATH:/opt/minio-binaries/"
 export PATH="$PATH:/home/andri/.local/bin/bin"
-export PATH="$PATH:/opt/arduino-ide_2.3.3_Linux_64bit"
+# export PATH="$PATH:/opt/arduino-ide_2.3.3_Linux_64bit"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:/opt/jetbrains-toolbox"
 export PATH="$PATH:/opt/typst-x86_64-unknown-linux-musl/"
 export PATH="$PATH:/opt/zen/zen.linux-x86_64/zen/zen-bin"
-export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/home/andri/workspace/flutter/flutter/bin"
+export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
+# export PATH="$PATH:/usr/local/go/bin"
+
+export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export CUDA_HOME=/usr/local/cuda-12.6
+
+export VCPKG_ROOT=$HOME/repos/vcpkg
 
 export XDG_CURRENT_DESKTOP=sway
-[ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
+# [ -f "/home/andri/.ghcup/env" ] && source "/home/andri/.ghcup/env" # ghcup-env
 
 # expand history size
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -73,19 +82,27 @@ plugins=(
     aliases
     # zsh-autosuggestions 
     git 
+    gh
     docker 
     docker-compose
     #zsh-vi-mode
     zsh-syntax-highlighting 
+    direnv
     )
 
 source $ZSH/oh-my-zsh.sh
 
+# fzf (nach oh-my-zsh, sonst überschreibt es Ctrl+R)
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+# Ctrl+T: rg statt find, Ausschlüsse in ~/.config/fzf/ignore
+export FZF_CTRL_T_COMMAND="rg --files --hidden --follow --glob '!.git' --ignore-file ~/.config/fzf/ignore 2>/dev/null"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-export EDITOR="/usr/bin/nvim"
-export VISUAL="/usr/bin/nvim"
+export EDITOR="/opt/nvim-linux-x86_64/bin/nvim"
+export VISUAL="/opt/nvim-linux-x86_64/bin/nvim"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -158,14 +175,23 @@ alias newenv="python3 -m venv .venv && source .venv/bin/activate"
 alias homieyaler="cd /home/andri/YalerTunnel/ && java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-2c-cf-67-30-50-4f-ssh &"
 alias homie4yaler="cd /home/andri/YalerTunnel/ && java YalerTunnel client 127.0.0.1:10022 try.yaler.io:80 fhnw-imvs-dc-a6-32-18-6f-4d-ssh &"
 
+# Colcon
+alias cb="colcon build --symlink-install && source ./install/setup.zsh"
+alias cbps="colcon build --symlink-install --packages-select && source ./install/setup.zsh"
+alias cbpi="colcon build --symlink-install --packages-ignore && source ./install/setup.zsh"
+alias i="source ./install/setup.zsh"
+alias sros='source /opt/ros/jazzy/setup.zsh && source install/setup.zsh'
+
+alias mux=tmuxinator
+alias files="nautilus"
+
 
 alias settings="gnome-control-center"
 # pandoc --listings -H setup.tex -V geometry:"left=1cm, top=1cm, right=1cm, bottom=2cm" --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"  -V fontsize=6pt ZF.md -o test.pdf
 #
 # Colored Terminals
 #alias yellow-term="alacritty msg create-window -o 'colors.primary.background=#0000ff'"
-
-alias yellow-term='alacritty msg create-window -o '\''colors.primary.background="#ffff00"'\'''
+# alias yellow-term='alacritty msg create-window -o '\''colors.primary.background="#ffff00"'\'''
 
 # Docker
 alias dc="docker compose"
@@ -175,6 +201,8 @@ alias fdate="date +'%R - %d.%b %Y'"
 
 # Launch matlab and fix no window bug
 alias matlab="env _JAVA_AWT_WM_NONREPARENTING=1 matlab" 
+
+alias frun='flutter run --dart-define-from-file=.env'
 
 # fkill - kill process
 fkill() {
@@ -208,8 +236,8 @@ fh() {
 
 
 # ROS autocomplete enable for zsh
-eval "$(register-python-argcomplete3 ros2)"
-eval "$(register-python-argcomplete3 colcon)"
+# eval "$(register-python-argcomplete3 ros2)"
+# eval "$(register-python-argcomplete3 colcon)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -226,3 +254,11 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+
+eval "$(direnv hook zsh)"
+export PATH="$HOME/.local/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/andri/google-cloud-sdk/path.zsh.inc' ]; then . '/home/andri/google-cloud-sdk/path.zsh.inc'; fi
