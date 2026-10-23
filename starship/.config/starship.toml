@@ -1,0 +1,7 @@
+# Only path, git branch and the prompt character - no language versions,
+# no git status symbols.
+format = "$directory$git_branch$character"
+
+# Keep the prompt on one line: path and input side by side.
+[line_break]
+disabled = true

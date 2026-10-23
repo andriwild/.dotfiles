@@ -1,0 +1,4 @@
+.DS_Store
+
+# Written by Karabiner-Elements on every config change
+karabiner/.config/karabiner/automatic_backups/

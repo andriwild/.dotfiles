@@ -1,0 +1,7 @@
+{
+    "editor.minimap.enabled": false,
+    "jupyter.widgetScriptSources": [
+        "jsdelivr.com",
+        "unpkg.com"
+    ]
+}

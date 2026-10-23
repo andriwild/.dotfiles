@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# AeroSpace keybinding cheat sheet, read live from ~/.aerospace.toml.
+# Plain workspace switching is left out; pass -a/--all to include it.
+# Pass -f/--fzf to filter interactively, or any other argument to grep for it.
+set -euo pipefail
+exec /usr/bin/python3 "${AEROKEYS_LIB:-$HOME/.local/share/aerokeys/aerokeys.py}" "$@"

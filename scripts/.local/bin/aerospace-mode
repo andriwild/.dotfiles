@@ -1,0 +1,50 @@
+#!/bin/zsh
+# Switches between the AeroSpace setup and plain macOS (for other people at this Mac).
+# Usage: aerospace-mode [on|off|toggle|status]   (default: toggle)
+set -u
+
+AEROSPACE=/opt/homebrew/bin/aerospace
+TRACKPADS=(com.apple.AppleMultitouchTrackpad com.apple.driver.AppleBluetoothMultitouch.trackpad)
+
+current() { $AEROSPACE list-workspaces --focused >/dev/null 2>&1 && echo on || echo off; }
+
+# value 0 = gesture off, 2 = macOS default
+set_gestures() {
+  local v=$1 enabled=$([[ $1 == 0 ]] && echo false || echo true)
+  for domain in $TRACKPADS; do
+    for key in TrackpadThreeFingerHorizSwipeGesture TrackpadThreeFingerVertSwipeGesture \
+               TrackpadFourFingerHorizSwipeGesture TrackpadFourFingerVertSwipeGesture \
+               TrackpadFourFingerPinchGesture TrackpadFiveFingerPinchGesture; do
+      defaults write $domain $key -int $v
+    done
+  done
+  for key in threeFingerHorizSwipeGesture threeFingerVertSwipeGesture fourFingerHorizSwipeGesture \
+             fourFingerVertSwipeGesture fourFingerPinchSwipeGesture fiveFingerPinchSwipeGesture; do
+    defaults -currentHost write -g com.apple.trackpad.$key -int $v
+  done
+  for key in showMissionControlGestureEnabled showDesktopGestureEnabled showLaunchpadGestureEnabled; do
+    defaults write com.apple.dock $key -bool $enabled
+  done
+}
+
+apply() {
+  if [[ $1 == on ]]; then
+    set_gestures 0
+    defaults write com.apple.dock autohide -bool true
+    defaults write com.apple.dock autohide-delay -float 1000
+  else
+    set_gestures 2
+    defaults write com.apple.dock autohide -bool true
+    defaults delete com.apple.dock autohide-delay 2>/dev/null
+  fi
+  killall Dock
+  /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u 2>/dev/null
+  $AEROSPACE enable $1 2>/dev/null
+}
+
+case "${1:-toggle}" in
+  on|off) apply $1 ;;
+  toggle) [[ $(current) == on ]] && apply off || apply on ;;
+  status) current ;;
+  *) echo "usage: ${0:t} [on|off|toggle|status]" >&2; exit 1 ;;
+esac

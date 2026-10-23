@@ -1,0 +1,25 @@
+font-size = 14
+theme = light:Builtin Light,dark:Dark+
+macos-option-as-alt = false
+font-family = "JetBrainsMono Nerd Font Mono"
+macos-titlebar-style = hidden
+window-padding-x = 8
+window-padding-y = 8
+
+# Swiss German layout: pipe and slash need awkward chords, so bind them to
+# cmd+i and cmd+< (the ISO key left of Y).
+keybind = super+i=text:|
+keybind = super+intl_backslash=text:/
+
+# Ctrl+Shift+Space: enter tmux copy mode (vi keys), like Alacritty's vi mode.
+# Sends the tmux prefix C-a followed by [ , so it only works inside tmux.
+keybind = ctrl+shift+space=text:\x01[
+
+# Option stays a compose key (Swiss layout), so send Meta-b explicitly:
+# alt+b jumps one word left in zsh.
+keybind = alt+b=esc:b
+
+# Always start in ~. The default "inherit" only switches to home when Ghostty
+# detects a launchd/`open` launch, which sometimes fails (e.g. via AeroSpace).
+# New tabs/splits still inherit the current dir (window-inherit-working-directory).
+working-directory = home

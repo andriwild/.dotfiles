@@ -1,0 +1,5 @@
+[user]
+	name = Andri Wild
+	email = andri.wild@software-brauerei.ch
+[tag]
+	sort = -v:refname
